@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menu">
+        <item>Play 2048</item>
+        <item>Play Peg Solitaire</item>
+        <item>View Scores</item>
+        <item>Settings</item>
+        <item>Help</item>
+    </string-array>
+</resources>

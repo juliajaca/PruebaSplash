@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Menu">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/header">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/iv_top"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_top_vector"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <TextView
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:text="MAIN MENU"
+            android:textColor="@color/rojo_corazon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/titulo"
+            android:adjustViewBounds="true"
+          />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_bottom"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_bottom_vector"/>
+
+    </RelativeLayout>
+    <ListView
+        android:paddingTop="16dp"
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below= "@id/header"/>
+    <!--android:listSelector="@color/black"-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/iv_heart"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_heart"
+        android:layout_below= "@android:id/list"/>/>
+
+</RelativeLayout>
