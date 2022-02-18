@@ -88,7 +88,7 @@ public class _Peg_Token extends FrameLayout {
                 label.setText("F");
                 break;
             case PULSADA:
-                background.setBackgroundColor(0xfff2b179);
+                //background.setBackgroundColor(0xfff2b179);
                 label.setBackgroundResource(R.drawable.pulsada);
                 break;
             default:

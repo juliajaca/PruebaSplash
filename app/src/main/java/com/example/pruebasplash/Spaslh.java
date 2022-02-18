@@ -88,8 +88,8 @@ public class Spaslh extends AppCompatActivity {
             @Override
             public void run() {
                 //redirect to main activity
-                startActivity(new Intent(Spaslh.this,
-                        Menu.class)
+                //startActivity(new Intent(Spaslh.this, Menu.class)
+                        startActivity(new Intent(Spaslh.this, Login.class)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 // finish activity
                 finish();

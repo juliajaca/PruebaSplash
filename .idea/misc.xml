@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documentos_HDD/Julia_inProgress/DAM2/PruebaSplash/app/src/main/res/drawable/boton_login.xml" value="0.15885416666666666" />
+        <entry key="..\:/Documentos_HDD/Julia_inProgress/DAM2/PruebaSplash/app/src/main/res/drawable/fondo_login.xml" value="0.27685185185185185" />
+        <entry key="..\:/Documentos_HDD/Julia_inProgress/DAM2/PruebaSplash/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1" />
+        <entry key="..\:/Documentos_HDD/Julia_inProgress/DAM2/PruebaSplash/app/src/main/res/drawable/ic_baseline_vpn_key_24.xml" value="0.1" />
+        <entry key="..\:/Documentos_HDD/Julia_inProgress/DAM2/PruebaSplash/app/src/main/res/layout/activity_login.xml" value="0.13272543059777103" />
+        <entry key="..\:/Documentos_HDD/Julia_inProgress/DAM2/PruebaSplash/app/src/main/res/layout/activity_spaslh.xml" value="0.13272543059777103" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/con_ficha.xml" value="0.1" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/ic_baseline_lens_24.xml" value="0.1" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/ic_heart.xml" value="0.3235897435897436" />

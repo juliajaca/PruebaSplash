@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Spaslh">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/iv_top"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_top_vector"/>
+
+    <LinearLayout
+        android:layout_below="@id/iv_top"
+        android:layout_above="@id/iv_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_login"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginHorizontal="50dp"
+       android:layout_marginVertical="100dp">
+
+        <TextView
+            android:id="@+id/loginIncorrecto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/fondo_login"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_person_24"
+                app:tint="@color/rojo_corazon" />
+
+            <EditText
+                android:paddingLeft="5dp"
+                android:id="@+id/nombreCaja"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/fondo_login"
+                android:hint="Usuario"
+                android:maxLength="20"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/fondo_login"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_vpn_key_24"
+                app:tint="@color/rojo_corazon"/>
+
+            <EditText
+                android:paddingLeft="5dp"
+                android:id="@+id/passCaja"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/fondo_login"
+                android:hint="pass"
+                android:maxLength="20"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boton_login"
+            android:text="Iniciar sesión"
+            android:textColor="@color/white"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_bottom"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_bottom_vector"/>
+
+
+</RelativeLayout>
