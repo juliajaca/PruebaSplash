@@ -2,6 +2,7 @@ package com.example.pruebasplash;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -23,10 +24,16 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + PLAYERS_TABLE_NAME + "("
-                + PLAYERS_ID_COL + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PLAYERS_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PLAYERS_NAME_COL + " TEXT,"
                 + PLAYERS_PASS_COL + " TEXT);";
         db.execSQL(query);
+        ContentValues values = new ContentValues();
+
+        values.put(PLAYERS_NAME_COL, "Admin");
+        values.put(PLAYERS_PASS_COL, "Admin");
+
+        db.insert(PLAYERS_TABLE_NAME, null, values);
     }
 
     @Override
@@ -34,6 +41,18 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ PLAYERS_TABLE_NAME);
         onCreate(db);
     }
+
+    public int buscarJugador(String nombre, String pass ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] args = { nombre, pass };
+        Cursor cursor = db.rawQuery("select * from 'tabla_jugadores' where nombre=? and " +
+                "contraseña=?", args, null);
+        int numero = cursor.getCount();
+        cursor.close();
+        db.close();
+        return numero;
+    }
+
 
     public void añadirJugador(String nombre, String contraseña){
         SQLiteDatabase db = this.getWritableDatabase();

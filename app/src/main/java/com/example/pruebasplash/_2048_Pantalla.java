@@ -55,7 +55,6 @@ public class _2048_Pantalla extends AppCompatActivity {
 
         animLayer = (_2048_Animation) findViewById(R.id.animLayer);
 
-
     }
 
     @Override
