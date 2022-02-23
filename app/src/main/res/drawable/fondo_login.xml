@@ -12,5 +12,5 @@
         android:color="@color/rojo_corazon"
         android:width="2dp"/>
     <solid
-        android:color="@android:color/transparent"/>
+        android:color="@android:color/white"/>
 </shape>

@@ -12,11 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PruebaSplash">
         <activity
+            android:name=".CreacionModificacionCuenta"
+            android:exported="true" />
+        <activity
             android:name=".Login"
             android:exported="true" />
         <activity
             android:name="._Peg_Pantalla"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name="._2048_Pantalla"
             android:exported="false" />

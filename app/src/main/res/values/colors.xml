@@ -14,4 +14,7 @@
     <color name="rojo_corazon">#D75A4A</color>
     <color name = "rojo_corazon_oscuro">#C93E2C</color>
     <color name = "rojo_corazon_claro">#DE7668</color>
+    <color name="pastel_pink">#E9A49B</color>
+    <color name="gris_claro">#EFEFEF</color>
+    <color name="baby_pink">#F0C2BC</color>
 </resources>

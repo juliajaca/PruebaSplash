@@ -42,15 +42,19 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public int buscarJugador(String nombre, String pass ) {
+    public String buscarJugador(String nombre, String pass ) {
+        String buscado = null;
         SQLiteDatabase db = this.getWritableDatabase();
         String[] args = { nombre, pass };
         Cursor cursor = db.rawQuery("select * from 'tabla_jugadores' where nombre=? and " +
                 "contraseña=?", args, null);
-        int numero = cursor.getCount();
+        if (cursor.getCount() != 0) {
+            buscado = nombre;
+        }
         cursor.close();
+
         db.close();
-        return numero;
+        return buscado;
     }
 
 
