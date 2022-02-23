@@ -9,19 +9,29 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class _2048_Logica extends LinearLayout {
+public class _2048_Logica extends LinearLayout implements Serializable {
 
     private _2048_Card[][] cardsMap = new _2048_Card[Config.LINES_2048][Config.LINES_2048];
     private List<Point> emptyPoints = new ArrayList<Point>();
 
+    public _2048_Card[][] getCardsMap() {
+        return cardsMap;
+    }
+
+    public void setCardsMap(_2048_Card[][] cardsMap) {
+        this.cardsMap = cardsMap;
+    }
 
     public _2048_Logica(Context context) {
         super(context);
@@ -108,7 +118,7 @@ public class _2048_Logica extends LinearLayout {
             for (int x = 0; x < Config.LINES_2048; x++) {
                 c = new _2048_Card(getContext());
                 line.addView(c, cardWidth, cardHeight);
-
+                Log.d("con", "el tamañoes" + cardHeight);
                 cardsMap[x][y] = c;
             }
         }
@@ -116,7 +126,6 @@ public class _2048_Logica extends LinearLayout {
     }
 
     public void startGame(){
-
         Log.d("con", "entra aqui");
         _2048_Pantalla aty = _2048_Pantalla.getMainActivity();
         aty.clearScore();

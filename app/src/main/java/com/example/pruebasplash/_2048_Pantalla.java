@@ -4,14 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class _2048_Pantalla extends AppCompatActivity {
 
@@ -37,6 +42,13 @@ public class _2048_Pantalla extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getSupportActionBar().hide();
+
+        }
+
+        Toast.makeText(_2048_Pantalla.this,"creae", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_2048_pantalla);
 
         root = (LinearLayout) findViewById(R.id.container);
@@ -55,6 +67,42 @@ public class _2048_Pantalla extends AppCompatActivity {
 
         animLayer = (_2048_Animation) findViewById(R.id.animLayer);
 
+        if (savedInstanceState != null) {
+            _2048_Logica gameViewGuardado = (_2048_Logica) savedInstanceState.getSerializable(
+                    "gameView");
+            ViewGroup parent = (ViewGroup)gameView.getParent();
+            final int index = parent.indexOfChild(gameView);
+            parent.removeView(gameView);
+
+            if(gameViewGuardado.getParent() != null) {
+                ((ViewGroup)gameViewGuardado.getParent()).removeView(gameViewGuardado); // <- fix
+            }
+            parent.addView(gameViewGuardado, index);
+
+            ///Cambiar tamaño
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                getSupportActionBar().hide();
+
+                /*
+                for (int y = 0; y < Config.LINES_2048; y++) {
+                    for (int x = 0; x < Config.LINES_2048; x++) {
+                        _2048_Card c = gameViewGuardado.getCardsMap()[x][y];
+                        c.getLayoutParams().height = Config.CARD_WIDTH-10;
+                        c.getLayoutParams().width = Config.CARD_WIDTH-10;
+                    }
+                }
+            } else{
+                for (int y = 0; y < Config.LINES_2048; y++) {
+                    for (int x = 0; x < Config.LINES_2048; x++) {
+                        _2048_Card c = gameViewGuardado.getCardsMap()[x][y];
+                        c.getLayoutParams().height = Config.CARD_WIDTH;
+                        c.getLayoutParams().width = Config.CARD_WIDTH;
+                    }
+                }
+                */
+            }
+
+        }
     }
 
     @Override
@@ -104,5 +152,54 @@ public class _2048_Pantalla extends AppCompatActivity {
         return animLayer;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle saveInstanceState) {
+        saveInstanceState.putSerializable("gameView",gameView );
+        super.onSaveInstanceState(saveInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+            super.onRestoreInstanceState(savedInstanceState);
+            gameView = (_2048_Logica) savedInstanceState.getSerializable("gameView");
+
+
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
+        }
+    }
+
+    private void hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    // Shows the system bars by removing all the flags
+    // except for the ones that make the content appear under the system bars.
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
 
 }

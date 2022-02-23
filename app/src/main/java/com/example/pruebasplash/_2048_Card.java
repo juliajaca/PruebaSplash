@@ -12,6 +12,8 @@ public class _2048_Card extends FrameLayout {
     private View background;
     private int num = 0;
 
+
+
     public _2048_Card(Context context) {
         super(context);
 
