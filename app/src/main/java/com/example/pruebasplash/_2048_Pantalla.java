@@ -79,6 +79,7 @@ public class _2048_Pantalla extends AppCompatActivity {
             }
             parent.addView(gameViewGuardado, index);
             //añado la animLayer
+            /*
             _2048_Animation animGuardado = (_2048_Animation) savedInstanceState.getSerializable(
                     "animLayer");
             //Toast.makeText(_2048_Pantalla.this, "eñ toast  numero "+animGuardado.cards.get(0).getNum(), Toast.LENGTH_SHORT).show();
@@ -91,7 +92,7 @@ public class _2048_Pantalla extends AppCompatActivity {
                 ((ViewGroup)animGuardado.getParent()).removeView(animGuardado); // <- fix
             }
             parent2.addView(animGuardado, index2);
-
+            */
             ///Cambiar tamaño
 
                 /*
@@ -176,15 +177,15 @@ public class _2048_Pantalla extends AppCompatActivity {
         super.onSaveInstanceState(saveInstanceState);
 
     }
-        /*
+
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
             super.onRestoreInstanceState(savedInstanceState);
             gameView = (_2048_Logica) savedInstanceState.getSerializable("gameView");
-            animLayer = (_2048_Animation)  savedInstanceState.getSerializable("animLayer");
+            //animLayer = (_2048_Animation)  savedInstanceState.getSerializable("animLayer");
 
 
-    }*/
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

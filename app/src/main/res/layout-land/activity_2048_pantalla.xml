@@ -10,7 +10,7 @@
 
     <FrameLayout
         android:id="@+id/gameContainer"
-        android:layout_width="262dp"
+        android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="1">
         <com.example.pruebasplash._2048_Logica
