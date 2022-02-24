@@ -4,8 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    style="@style/Theme.NoBar">
+    android:orientation="horizontal">
 
 
 
@@ -58,11 +57,12 @@
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
+        <ImageView
             android:id="@+id/btnNewGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Game" />
+            android:text="New Game"
+            android:src="@drawable/ic_baseline_autorenew_24"/>
 
         <TextView
             android:layout_width="5dp"

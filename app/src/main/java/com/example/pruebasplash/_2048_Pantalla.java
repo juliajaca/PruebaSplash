@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ public class _2048_Pantalla extends AppCompatActivity {
     private int score = 0;
     private TextView tvScore,tvBestScore;
     private LinearLayout root = null;
-    private Button btnNewGame;
+    private ImageView btnNewGame;
     private _2048_Logica gameView;
     private _2048_Animation animLayer = null;
 
@@ -45,7 +46,6 @@ public class _2048_Pantalla extends AppCompatActivity {
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getSupportActionBar().hide();
-
         }
 
         Toast.makeText(_2048_Pantalla.this,"creae", Toast.LENGTH_LONG).show();
@@ -59,7 +59,7 @@ public class _2048_Pantalla extends AppCompatActivity {
 
         gameView = (_2048_Logica) findViewById(R.id.gameView);
 
-        btnNewGame = (Button) findViewById(R.id.btnNewGame);
+        btnNewGame = (ImageView) findViewById(R.id.btnNewGame);
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
             gameView.startGame();
@@ -78,10 +78,21 @@ public class _2048_Pantalla extends AppCompatActivity {
                 ((ViewGroup)gameViewGuardado.getParent()).removeView(gameViewGuardado); // <- fix
             }
             parent.addView(gameViewGuardado, index);
+            //añado la animLayer
+            _2048_Animation animGuardado = (_2048_Animation) savedInstanceState.getSerializable(
+                    "animLayer");
+            //Toast.makeText(_2048_Pantalla.this, "eñ toast  numero "+animGuardado.cards.get(0).getNum(), Toast.LENGTH_SHORT).show();
+            //animGuardado.cards.get(0).getNum();
+            ViewGroup parent2 = (ViewGroup)animLayer.getParent();
+            final int index2 = parent2.indexOfChild(animLayer);
+            parent2.removeView(animLayer);
+
+            if(animGuardado.getParent() != null) {
+                ((ViewGroup)animGuardado.getParent()).removeView(animGuardado); // <- fix
+            }
+            parent2.addView(animGuardado, index2);
 
             ///Cambiar tamaño
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                getSupportActionBar().hide();
 
                 /*
                 for (int y = 0; y < Config.LINES_2048; y++) {
@@ -100,8 +111,14 @@ public class _2048_Pantalla extends AppCompatActivity {
                     }
                 }
                 */
-            }
 
+
+        }
+
+        ///Cambiar tamaño
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getSupportActionBar().hide();
+            hideSystemUI();
         }
     }
 
@@ -155,23 +172,25 @@ public class _2048_Pantalla extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle saveInstanceState) {
         saveInstanceState.putSerializable("gameView",gameView );
+        saveInstanceState.putSerializable("animLayer",animLayer );
         super.onSaveInstanceState(saveInstanceState);
-    }
 
+    }
+        /*
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
             super.onRestoreInstanceState(savedInstanceState);
             gameView = (_2048_Logica) savedInstanceState.getSerializable("gameView");
+            animLayer = (_2048_Animation)  savedInstanceState.getSerializable("animLayer");
 
 
-
-    }
+    }*/
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            hideSystemUI();
+            //hideSystemUI();
         }
     }
 

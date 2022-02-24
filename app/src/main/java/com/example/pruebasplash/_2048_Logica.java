@@ -178,6 +178,8 @@ public class _2048_Logica extends LinearLayout implements Serializable {
 
                             _2048_Pantalla.getMainActivity().getAnimLayer().createMoveAnim(cardsMap[x1][y],cardsMap[x][y], x1, x, y, y);
 
+                            //Toast.makeText(((Activity) getContext()), "fromX " + x +", tox "+x1+", y la y "+y, Toast.LENGTH_LONG).show();
+
                             cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
                             cardsMap[x1][y].setNum(0);
 

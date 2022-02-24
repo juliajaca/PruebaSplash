@@ -1,23 +1,28 @@
 package com.example.pruebasplash;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class _2048_Animation extends FrameLayout {
+public class _2048_Animation extends FrameLayout implements Serializable {
 
-    private List<_2048_Card> cards = new ArrayList<_2048_Card>();
+    public List<_2048_Card> cards = new ArrayList<_2048_Card>();
 
     public _2048_Animation(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -41,18 +46,21 @@ public class _2048_Animation extends FrameLayout {
     public void createMoveAnim(final _2048_Card from,final _2048_Card to,int fromX,int toX,int fromY,int toY){
 
         final _2048_Card c = getCard(from.getNum());
-
+        Log.d("CON", "el numero es" + c.getNum());
+        Toast.makeText(((Activity) getContext()),"el numero es" + c.getNum() , Toast.LENGTH_SHORT).show();
 
         LayoutParams lp = new LayoutParams(Config.CARD_WIDTH, Config.CARD_WIDTH);
         //lp.gravity = Gravity.CENTER; //nuevo
         lp.leftMargin = fromX*Config.CARD_WIDTH;
         lp.topMargin = fromY*Config.CARD_WIDTH;
-        c.setLayoutParams(lp);
 
+        c.setLayoutParams(lp);
+        c.setBackgroundColor(Color.GREEN);
         if (to.getNum()<=0) {
             to.getLabel().setVisibility(View.INVISIBLE);
         }
         TranslateAnimation ta = new TranslateAnimation(0, Config.CARD_WIDTH*(toX-fromX), 0, Config.CARD_WIDTH*(toY-fromY));
+        Toast.makeText(((Activity) getContext()), "fromX " + 0 +", tox "+Config.CARD_WIDTH*(toX-fromX)+", y la y "+Config.CARD_WIDTH*(toY-fromY), Toast.LENGTH_SHORT).show();
         ta.setDuration(200);
         ta.setAnimationListener(new Animation.AnimationListener() {
 
