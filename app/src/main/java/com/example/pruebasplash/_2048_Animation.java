@@ -46,8 +46,6 @@ public class _2048_Animation extends FrameLayout implements Serializable {
     public void createMoveAnim(final _2048_Card from,final _2048_Card to,int fromX,int toX,int fromY,int toY){
 
         final _2048_Card c = getCard(from.getNum());
-        Log.d("CON", "el numero es" + c.getNum());
-        Toast.makeText(((Activity) getContext()),"el numero es" + c.getNum() , Toast.LENGTH_SHORT).show();
 
         LayoutParams lp = new LayoutParams(Config.CARD_WIDTH, Config.CARD_WIDTH);
         //lp.gravity = Gravity.CENTER; //nuevo
@@ -55,7 +53,7 @@ public class _2048_Animation extends FrameLayout implements Serializable {
         lp.topMargin = fromY*Config.CARD_WIDTH;
 
         c.setLayoutParams(lp);
-        c.setBackgroundColor(Color.GREEN);
+
         if (to.getNum()<=0) {
             to.getLabel().setVisibility(View.INVISIBLE);
         }

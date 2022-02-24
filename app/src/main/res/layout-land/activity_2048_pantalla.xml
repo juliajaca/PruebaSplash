@@ -13,16 +13,17 @@
         android:layout_width="262dp"
         android:layout_height="fill_parent"
         android:layout_weight="1">
+        <com.example.pruebasplash._2048_Logica
+            android:id="@+id/gameView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"></com.example.pruebasplash._2048_Logica>
 
         <com.example.pruebasplash._2048_Animation
             android:id="@+id/animLayer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"></com.example.pruebasplash._2048_Animation>
 
-        <com.example.pruebasplash._2048_Logica
-            android:id="@+id/gameView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></com.example.pruebasplash._2048_Logica>
+
     </FrameLayout>
 
 
