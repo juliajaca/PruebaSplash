@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Spaslh"
+    android:background="@color/baby_pink">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/iv_top"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_top_vector"/>
+
+    <LinearLayout
+        android:id="@+id/LayoutNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_top"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="50dp"
+        android:background="@drawable/fondo_login"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:background="@drawable/fondo_login"
+            android:text="NOMBRE DE USUARIO"
+            android:gravity="center"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:text="EL NOMBRE QWUE SEE"
+            android:gravity="center"></TextView>
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/LayoutContraseña"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LayoutNombre"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/fondo_login"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:background="@drawable/fondo_login"
+            android:text="CONTRASEÑA"
+            android:gravity="center"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:text="EL NOMBRE QWUE SEE"
+            android:inputType="textPassword"
+            android:gravity="center"></TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambiar contraseña"
+            android:onClick="verDialogo"
+            android:gravity="center"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            android:drawableBottom="@null"
+            android:shadowRadius="@null"
+            android:textColor="@color/rojo_corazon"></Button>
+    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/iv_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_bottom_vector" />
+
+
+</RelativeLayout>

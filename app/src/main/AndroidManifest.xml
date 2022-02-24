@@ -2,20 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pruebasplash">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PruebaSplash"
-        >
+        android:theme="@style/Theme.PruebaSplash">
         <activity
-            android:name=".CreacionModificacionCuenta"
-            android:exported="true" />
+            android:name=".ModificacionCuenta"
+            android:exported="false" />
+        <activity
+            android:name=".CreacionCuenta"
+            android:exported="true"></activity>
         <activity
             android:name=".Login"
             android:exported="true" />
@@ -24,21 +23,21 @@
             android:exported="true" />
         <activity
             android:name="._2048_Pantalla"
-            android:exported="true" >
+            android:exported="true"></activity>
+        <activity
+            android:name=".Spaslh"
+            android:exported="true"></activity>
+        <activity
+            android:name=".Menu"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Spaslh"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".Menu"
-            android:exported="true" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

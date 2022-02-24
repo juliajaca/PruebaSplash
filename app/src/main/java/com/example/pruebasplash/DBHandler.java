@@ -67,5 +67,20 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public boolean isNombreUnico(String nombre){
+        boolean isUnico = true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] args = { nombre};
+        Cursor cursor = db.rawQuery("select * from 'tabla_jugadores' where nombre=?", args, null);
+        if (cursor.getCount() != 0) {
+            isUnico = false;
+        }
+        cursor.close();
+
+        db.close();
+        return isUnico;
+
+    }
+
 
 }

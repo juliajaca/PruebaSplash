@@ -54,7 +54,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         Log.d("con" , "la altura es "+ height);
 
         Log.d("con" , "la anchura es"+ width);
-        Config.CARD_WIDTH =(Math.min(width, height)-10)/Config.LINES_2048;
+        Config.CARD_WIDTH =(Math.min(width, height))/Config.LINES_2048;
     }
 
     private void initGameView(){
@@ -126,6 +126,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
     }
 
     public void startGame(){
+
         Log.d("con", "entra aqui");
         _2048_Pantalla aty = _2048_Pantalla.getMainActivity();
         aty.clearScore();
