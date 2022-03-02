@@ -17,6 +17,12 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String PLAYERS_NAME_COL = "nombre";
     private static final String PLAYERS_PASS_COL = "contraseña";
 
+    private static final String SCORES_TABLE_NAME = "tabla_puntuaciones";
+    private static final String SCORES_ID_COL = "id";
+    private static final String SCORES_NAME_COL = "nombre";
+    private static final String SCORES_SCORE_COL = "puntuacion";
+    private static final String SCORES_GAME_COL = "juego";
+
     public DBHandler(Context c) {
         super(c, DB_NAME, null, DB_VERSION);
     }
@@ -34,6 +40,21 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(PLAYERS_PASS_COL, "Admin");
 
         db.insert(PLAYERS_TABLE_NAME, null, values);
+
+        //Creo la tabla de puntuaciones
+        String query2 = "CREATE TABLE " + SCORES_TABLE_NAME + "("
+                + SCORES_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + SCORES_NAME_COL + " TEXT,"
+                + SCORES_SCORE_COL + " INT,"
+                + SCORES_GAME_COL + " TEXT);";
+        db.execSQL(query2);
+        ContentValues values2 = new ContentValues();
+
+        values2.put(PLAYERS_NAME_COL, "Admin");
+        values2.put(SCORES_SCORE_COL, 200);
+        values2.put(SCORES_GAME_COL, "2048");
+
+        db.insert(SCORES_TABLE_NAME, null, values2);
     }
 
     @Override
@@ -82,5 +103,38 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public void actualizarContraseña(String usuario, String contraseña){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PLAYERS_NAME_COL,usuario); //These Fields should be your String values of actual
+        // column names
+        cv.put(PLAYERS_PASS_COL,contraseña);
+        try {
+            String[] args = { usuario };
+            db.update(PLAYERS_TABLE_NAME, cv, "nombre=?", args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        db.close();
+
+    }
+
+    public int[] calcularJuegos(String usuario){
+        int[] numeroJuegos = new int[2];
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] args = { usuario, "2048"};
+        Cursor cursor = db.rawQuery("select * from 'tabla_puntuaciones' where nombre=? and " +
+                "juego=?", args, null);
+        numeroJuegos[0] = cursor.getCount();
+        cursor.close();
+        // juegos peg
+        String[] args2 = { usuario, "peg"};
+        Cursor cursor2 = db.rawQuery("select * from 'tabla_puntuaciones' where nombre=? and " +
+                "juego=?", args2, null);
+        numeroJuegos[1] = cursor2.getCount();
+        cursor.close();
+        db.close();
+        return numeroJuegos;
+    }
 
 }

@@ -11,5 +11,5 @@ public class Config {
     };
     public static int CARD_WIDTH = 50;
     public static int TOKEN_WIDTH= 20;
-    public static String LOGGED_USER = null;
+    public static String LOGGED_USER = "Admin";
 }

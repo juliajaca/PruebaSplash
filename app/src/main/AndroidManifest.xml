@@ -10,23 +10,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PruebaSplash">
         <activity
+            android:name=".Scores"
+            android:exported="false" />
+        <activity
             android:name=".ModificacionCuenta"
             android:exported="false" />
         <activity
             android:name=".CreacionCuenta"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Login"
-            android:exported="true" />
+            android:exported="true">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
         <activity
             android:name="._Peg_Pantalla"
             android:exported="true" />
         <activity
             android:name="._2048_Pantalla"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Spaslh"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Menu"
             android:exported="true">

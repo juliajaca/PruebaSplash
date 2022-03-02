@@ -36,7 +36,7 @@ public class Menu extends AppCompatActivity {
                     startActivity(new Intent(Menu.this, _Peg_Pantalla.class));
                 } else if (strText.equalsIgnoreCase(getResources().getStringArray(R.array.menu)[2])) {
                 // Launch the Settings Activity
-                    startActivity(new Intent(Menu.this, _2048_Pantalla.class));
+                    startActivity(new Intent(Menu.this, Scores.class));
                 } else if (strText.equalsIgnoreCase(getResources().getStringArray(R.array.menu)[3])) {
                     // Launch the Scores Activity
                     startActivity(new Intent(Menu.this, ModificacionCuenta.class));
