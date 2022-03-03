@@ -1,10 +1,13 @@
 package com.example.pruebasplash;
 
-public class Puntuacion {
+public class PuntuacionModel {
     private String nombre;
     private String puntos;
 
-    public Puntuacion(String nombre, String puntos) {
+    public PuntuacionModel(){
+
+    }
+    public PuntuacionModel(String nombre, String puntos) {
         this.nombre = nombre;
         this.puntos = puntos;
     }

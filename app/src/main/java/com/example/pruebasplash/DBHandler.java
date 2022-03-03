@@ -6,8 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "juegosdb";
@@ -22,6 +21,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String SCORES_NAME_COL = "nombre";
     private static final String SCORES_SCORE_COL = "puntuacion";
     private static final String SCORES_GAME_COL = "juego";
+    private ArrayList<PuntuacionModel> puntuacionList = new ArrayList<PuntuacionModel>();
 
     public DBHandler(Context c) {
         super(c, DB_NAME, null, DB_VERSION);
@@ -77,7 +77,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return buscado;
     }
-
 
     public void añadirJugador(String nombre, String contraseña){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -135,6 +134,28 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return numeroJuegos;
+    }
+
+    public ArrayList<PuntuacionModel> getPuntuaciones(String juegoSeleccionado) {
+        puntuacionList.clear();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] args = { juegoSeleccionado };
+        Cursor cursor = db.rawQuery("select * from 'tabla_puntuaciones' where juego=?  ", args, null);
+        if (cursor.getCount() != 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    PuntuacionModel item = new PuntuacionModel();
+                    int posicionNombre = cursor.getColumnIndex(SCORES_NAME_COL);
+                    item.setNombre(cursor.getString(posicionNombre));
+                    int posicionPuntuacion = cursor.getColumnIndex(SCORES_SCORE_COL);
+                    item.setPuntos(cursor.getString(posicionPuntuacion));
+                    puntuacionList.add(item);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        db.close();
+        return puntuacionList;
     }
 
 }

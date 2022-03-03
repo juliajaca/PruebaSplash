@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PuntuacionAdapter extends RecyclerView.Adapter<PuntuacionAdapter.ViewHolder>{
     // Member variables.
-    private ArrayList<Puntuacion> mSportsData;
+    private ArrayList<PuntuacionModel> mSportsData;
     private Context mContext;
 
     /**
@@ -21,7 +21,7 @@ public class PuntuacionAdapter extends RecyclerView.Adapter<PuntuacionAdapter.Vi
      * @param sportsData ArrayList containing the sports data.
      * @param context Context of the application.
      */
-    PuntuacionAdapter(Context context, ArrayList<Puntuacion> sportsData) {
+    PuntuacionAdapter(Context context, ArrayList<PuntuacionModel> sportsData) {
         this.mSportsData = sportsData;
         this.mContext = context;
     }
@@ -36,8 +36,7 @@ public class PuntuacionAdapter extends RecyclerView.Adapter<PuntuacionAdapter.Vi
      * @return The newly created ViewHolder.
      */
     @Override
-    public PuntuacionAdapter.ViewHolder onCreateViewHolder(
-            ViewGroup parent, int viewType) {
+    public PuntuacionAdapter.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).
                 inflate(R.layout.list_item, parent, false));
     }
@@ -52,7 +51,7 @@ public class PuntuacionAdapter extends RecyclerView.Adapter<PuntuacionAdapter.Vi
     public void onBindViewHolder(PuntuacionAdapter.ViewHolder holder,
                                  int position) {
         // Get current sport.
-        Puntuacion currentSport = mSportsData.get(position);
+        PuntuacionModel currentSport = mSportsData.get(position);
 
         // Populate the textviews with data.
         holder.bindTo(currentSport);
@@ -87,14 +86,14 @@ public class PuntuacionAdapter extends RecyclerView.Adapter<PuntuacionAdapter.Vi
             super(itemView);
 
             // Initialize the views.
-            mTitleText = itemView.findViewById(R.id.title);
-            mInfoText = itemView.findViewById(R.id.subTitle);
+            mTitleText = itemView.findViewById(R.id.user);
+            mInfoText = itemView.findViewById(R.id.score);
         }
 
-        void bindTo(Puntuacion currentSport){
+        void bindTo(PuntuacionModel currentSport){
             // Populate the textviews with data.
-            mTitleText.setText(currentSport.getTitle());
-            mInfoText.setText(currentSport.getInfo());
+            mTitleText.setText(currentSport.getNombre());
+            mInfoText.setText(currentSport.getPuntos());
 
         }
     }
