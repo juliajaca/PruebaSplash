@@ -15,7 +15,7 @@
         android:src="@drawable/ic_top_vector"/>
 
     <LinearLayout
-        android:id="@+id/LayoutLogin"
+        android:id="@+id/Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/iv_bottom"

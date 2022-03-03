@@ -1,6 +1,8 @@
 package com.example.pruebasplash;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,8 +12,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Scores extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -61,6 +65,37 @@ public class Scores extends AppCompatActivity {
 
         // Get the data.
         initializeData();
+
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper
+                .SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT |
+                ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                int from = viewHolder.getAdapterPosition();
+                int to = target.getAdapterPosition();
+                Collections.swap(mSportsData, from, to);
+                mAdapter.notifyItemMoved(from, to);
+                return false;
+            }
+
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int posicion = viewHolder.getAdapterPosition();
+                PuntuacionModel puntuacion = mSportsData.get(posicion);
+                if(puntuacion.getNombre().equals(Config.LOGGED_USER)){
+                    Toast.makeText(Scores.this, "IGUAL", Toast.LENGTH_LONG).show();
+                    mSportsData.remove(viewHolder.getAdapterPosition());
+                    mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                }else{
+                    Toast.makeText(Scores.this, "NO IGUAL", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+        // add it to your RecyclerView
+        helper.attachToRecyclerView(mRecyclerView);
     }
 
     public void setTabColor(TabHost tabhost) {

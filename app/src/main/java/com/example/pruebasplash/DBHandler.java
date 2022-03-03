@@ -34,12 +34,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 + PLAYERS_NAME_COL + " TEXT,"
                 + PLAYERS_PASS_COL + " TEXT);";
         db.execSQL(query);
-        ContentValues values = new ContentValues();
-
-        values.put(PLAYERS_NAME_COL, "Admin");
-        values.put(PLAYERS_PASS_COL, "Admin");
-
-        db.insert(PLAYERS_TABLE_NAME, null, values);
 
         //Creo la tabla de puntuaciones
         String query2 = "CREATE TABLE " + SCORES_TABLE_NAME + "("
@@ -48,13 +42,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + SCORES_SCORE_COL + " INT,"
                 + SCORES_GAME_COL + " TEXT);";
         db.execSQL(query2);
-        ContentValues values2 = new ContentValues();
-
-        values2.put(PLAYERS_NAME_COL, "Admin");
-        values2.put(SCORES_SCORE_COL, 200);
-        values2.put(SCORES_GAME_COL, "2048");
-
-        db.insert(SCORES_TABLE_NAME, null, values2);
+       addDemoData(db);
     }
 
     @Override
@@ -156,6 +144,30 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return puntuacionList;
+    }
+
+    public void addDemoData(SQLiteDatabase db){
+        ContentValues values = new ContentValues();
+        values.put(PLAYERS_NAME_COL, "Admin");
+        values.put(PLAYERS_PASS_COL, "Admin");
+        db.insert(PLAYERS_TABLE_NAME, null, values);
+
+        ContentValues values2 = new ContentValues();
+        values2.put(PLAYERS_NAME_COL, "Admin");
+        values2.put(SCORES_SCORE_COL, 200);
+        values2.put(SCORES_GAME_COL, "2048");
+        db.insert(SCORES_TABLE_NAME, null, values2);
+
+        ContentValues values3 = new ContentValues();
+        values3.put(PLAYERS_NAME_COL, "Julia");
+        values3.put(PLAYERS_PASS_COL, "Julia");
+        db.insert(PLAYERS_TABLE_NAME, null, values3);
+
+        ContentValues values4 = new ContentValues();
+        values4.put(PLAYERS_NAME_COL, "Julia");
+        values4.put(SCORES_SCORE_COL, 80);
+        values4.put(SCORES_GAME_COL, "2048");
+        db.insert(SCORES_TABLE_NAME, null, values4);
     }
 
 }
