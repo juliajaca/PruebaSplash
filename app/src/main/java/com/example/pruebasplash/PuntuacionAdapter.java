@@ -93,7 +93,7 @@ public class PuntuacionAdapter extends RecyclerView.Adapter<PuntuacionAdapter.Vi
         void bindTo(PuntuacionModel currentSport){
             // Populate the textviews with data.
             mTitleText.setText(currentSport.getNombre());
-            mInfoText.setText(currentSport.getPuntos());
+            mInfoText.setText(String.valueOf(currentSport.getPuntos()));
 
         }
     }

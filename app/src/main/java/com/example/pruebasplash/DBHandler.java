@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "juegosdb";
@@ -124,11 +128,14 @@ public class DBHandler extends SQLiteOpenHelper {
         return numeroJuegos;
     }
 
-    public ArrayList<PuntuacionModel> getPuntuaciones(String juegoSeleccionado) {
+    public ArrayList<PuntuacionModel> getPuntuaciones(String juegoSeleccionado,
+                                                      String campoOrdenacion, String orden) {
         puntuacionList.clear();
         SQLiteDatabase db = this.getWritableDatabase();
         String[] args = { juegoSeleccionado };
-        Cursor cursor = db.rawQuery("select * from 'tabla_puntuaciones' where juego=?  ", args, null);
+        Cursor cursor = db.rawQuery("select * from 'tabla_puntuaciones' where juego=?  order by " +
+                        campoOrdenacion +" " + orden,
+                args, null);
         if (cursor.getCount() != 0) {
             if (cursor.moveToFirst()) {
                 do {
@@ -136,7 +143,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     int posicionNombre = cursor.getColumnIndex(SCORES_NAME_COL);
                     item.setNombre(cursor.getString(posicionNombre));
                     int posicionPuntuacion = cursor.getColumnIndex(SCORES_SCORE_COL);
-                    item.setPuntos(cursor.getString(posicionPuntuacion));
+                    item.setPuntos(cursor.getInt(posicionPuntuacion));
                     puntuacionList.add(item);
                 } while (cursor.moveToNext());
             }
@@ -144,6 +151,17 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return puntuacionList;
+    }
+
+    public void borrarPuntuacion(String nombreJ, String puntuacion, String juego){
+        try {
+            String[] args = { nombreJ , puntuacion, juego};
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("delete from "+  SCORES_TABLE_NAME +" where  nombre =? and puntuacion =? and  juego = ?", args);
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addDemoData(SQLiteDatabase db){
@@ -165,9 +183,38 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values4 = new ContentValues();
         values4.put(PLAYERS_NAME_COL, "Julia");
-        values4.put(SCORES_SCORE_COL, 80);
+        values4.put(SCORES_SCORE_COL, 800);
         values4.put(SCORES_GAME_COL, "2048");
         db.insert(SCORES_TABLE_NAME, null, values4);
+
+        ContentValues values5 = new ContentValues();
+        values5.put(PLAYERS_NAME_COL, "Julia");
+        values5.put(SCORES_SCORE_COL, 80);
+        values5.put(SCORES_GAME_COL, "peg");
+        db.insert(SCORES_TABLE_NAME, null, values5);
+
+        ContentValues values6 = new ContentValues();
+        values6.put(PLAYERS_NAME_COL, "Admin");
+        values6.put(SCORES_SCORE_COL, 40);
+        values6.put(SCORES_GAME_COL, "peg");
+        db.insert(SCORES_TABLE_NAME, null, values6);
+
+        ContentValues values7 = new ContentValues();
+        values7.put(PLAYERS_NAME_COL, "Sofi");
+        values7.put(PLAYERS_PASS_COL, "Sofi");
+        db.insert(PLAYERS_TABLE_NAME, null, values7);
+
+        ContentValues values8 = new ContentValues();
+        values8.put(PLAYERS_NAME_COL, "Sofi");
+        values8.put(SCORES_SCORE_COL, 10);
+        values8.put(SCORES_GAME_COL, "peg");
+        db.insert(SCORES_TABLE_NAME, null, values8);
+
+        ContentValues values9 = new ContentValues();
+        values9.put(PLAYERS_NAME_COL, "Sofi");
+        values9.put(SCORES_SCORE_COL, 1000);
+        values9.put(SCORES_GAME_COL, "2048");
+        db.insert(SCORES_TABLE_NAME, null, values9);
     }
 
 }
