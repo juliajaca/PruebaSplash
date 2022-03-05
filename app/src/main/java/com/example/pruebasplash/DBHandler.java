@@ -164,6 +164,33 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+    public int getMejorPuntuacion(String nombreJ, String juego){
+        int puntos = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] args = { nombreJ, juego};
+        Cursor cursor = db.rawQuery("select MAX(puntuacion) from 'tabla_puntuaciones' where nombre=? and " +
+                "juego=?", args, null);
+        if (cursor != null) {
+            Log.d("con", "hay " + cursor.getCount() + "puntuaciones");
+            cursor.moveToFirst();
+            puntos = ((cursor.getInt(0)));
+        }
+        cursor.close();
+        db.close();
+        return puntos;
+    }
+
+    public void guardarPuntuacion(String nombreJ, String juego, int puntuacionJ){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SCORES_GAME_COL, juego);
+        values.put(SCORES_SCORE_COL, puntuacionJ);
+        values.put(SCORES_NAME_COL, nombreJ);
+        db.insert(SCORES_TABLE_NAME, null, values);
+        db.close();
+
+    }
+
     public void addDemoData(SQLiteDatabase db){
         ContentValues values = new ContentValues();
         values.put(PLAYERS_NAME_COL, "Admin");

@@ -58,7 +58,7 @@ public class _2048_Animation extends FrameLayout implements Serializable {
             to.getLabel().setVisibility(View.INVISIBLE);
         }
         TranslateAnimation ta = new TranslateAnimation(0, Config.CARD_WIDTH*(toX-fromX), 0, Config.CARD_WIDTH*(toY-fromY));
-        Toast.makeText(((Activity) getContext()), "fromX " + 0 +", tox "+Config.CARD_WIDTH*(toX-fromX)+", y la y "+Config.CARD_WIDTH*(toY-fromY), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(((Activity) getContext()), "fromX " + 0 +", tox "+Config.CARD_WIDTH*(toX-fromX)+", y la y "+Config.CARD_WIDTH*(toY-fromY), Toast.LENGTH_SHORT).show();
         ta.setDuration(200);
         ta.setAnimationListener(new Animation.AnimationListener() {
 

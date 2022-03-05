@@ -18,20 +18,22 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class _2048_Logica extends LinearLayout implements Serializable {
 
+
+    private _2048_Card[][] cardsMapOld = new _2048_Card[Config.LINES_2048][Config.LINES_2048];
     private _2048_Card[][] cardsMap = new _2048_Card[Config.LINES_2048][Config.LINES_2048];
     private List<Point> emptyPoints = new ArrayList<Point>();
+    private int scoreOld ;
+    private _2048_Pantalla aty ;
 
     public _2048_Card[][] getCardsMap() {
         return cardsMap;
     }
 
-    public void setCardsMap(_2048_Card[][] cardsMap) {
-        this.cardsMap = cardsMap;
-    }
 
     public _2048_Logica(Context context) {
         super(context);
@@ -50,10 +52,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                 .getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-
-        Log.d("con" , "la altura es "+ height);
-
-        Log.d("con" , "la anchura es"+ width);
         Config.CARD_WIDTH =(Math.min(width, height))/Config.LINES_2048;
     }
 
@@ -103,7 +101,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
     }
 
     private void addCards(int cardWidth,int cardHeight){
-
         _2048_Card c;
 
         LinearLayout line;
@@ -117,23 +114,23 @@ public class _2048_Logica extends LinearLayout implements Serializable {
 
             for (int x = 0; x < Config.LINES_2048; x++) {
                 c = new _2048_Card(getContext());
+                _2048_Card cOld =  new _2048_Card(getContext());
                 line.addView(c, cardWidth, cardHeight);
-                Log.d("con", "el tamañoes" + cardHeight);
                 cardsMap[x][y] = c;
+                cardsMapOld[x][y] = cOld;
             }
         }
 
     }
 
     public void startGame(){
+        aty = _2048_Pantalla.getMainActivity();
+        scoreOld = new Integer(aty.getScore());
 
-        Log.d("con", "entra aqui");
-        _2048_Pantalla aty = _2048_Pantalla.getMainActivity();
         aty.clearScore();
         aty.showBestScore(aty.getBestScore());
 
         for (int y = 0; y < Config.LINES_2048; y++) {
-            Log.d("con", "entra aqui"+ y);
             for (int x = 0; x < Config.LINES_2048; x++) {
                 cardsMap[x][y].setNum(0);
             }
@@ -166,7 +163,8 @@ public class _2048_Logica extends LinearLayout implements Serializable {
 
 
     private void swipeLeft(){
-
+        saveMovement();
+        scoreOld = new Integer(aty.getScore());
         boolean merge = false;
 
         for (int y = 0; y < Config.LINES_2048; y++) {
@@ -178,9 +176,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                         if (cardsMap[x][y].getNum()<=0) {
 
                             _2048_Pantalla.getMainActivity().getAnimLayer().createMoveAnim(cardsMap[x1][y],cardsMap[x][y], x1, x, y, y);
-
-                            //Toast.makeText(((Activity) getContext()), "fromX " + x +", tox "+x1+", y la y "+y, Toast.LENGTH_LONG).show();
-
                             cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
                             cardsMap[x1][y].setNum(0);
 
@@ -200,8 +195,8 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                     }
                 }
             }
-        }
 
+        }
         if (merge) {
             checkWin();
             addRandomNum();
@@ -209,7 +204,8 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         }
     }
     private void swipeRight(){
-
+        saveMovement();
+        scoreOld = new Integer(aty.getScore());
         boolean merge = false;
 
         for (int y = 0; y < Config.LINES_2048; y++) {
@@ -237,6 +233,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                     }
                 }
             }
+
         }
 
         if (merge) {
@@ -246,7 +243,8 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         }
     }
     private void swipeUp(){
-
+      saveMovement();
+        scoreOld = new Integer(aty.getScore());
         boolean merge = false;
 
         for (int x = 0; x < Config.LINES_2048; x++) {
@@ -276,6 +274,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                     }
                 }
             }
+
         }
 
         if (merge) {
@@ -285,7 +284,8 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         }
     }
     private void swipeDown(){
-
+        saveMovement();
+        scoreOld = new Integer(aty.getScore());
         boolean merge = false;
 
         for (int x = 0; x < Config.LINES_2048; x++) {
@@ -313,6 +313,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                     }
                 }
             }
+
         }
 
         if (merge) {
@@ -342,6 +343,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         }
 
         if (complete) {
+            _2048_Pantalla.getMainActivity().saveScore();
             new AlertDialog.Builder(getContext()).setTitle("").setMessage("Fin del juego").setPositiveButton("Reiniciar", new DialogInterface.OnClickListener() {
 
                 @Override
@@ -358,6 +360,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         for (int y = 0; y < Config.LINES_2048; y++) {
             for (int x = 0; x < Config.LINES_2048; x++) {
                 if (cardsMap[x][y].getNum()==2048) {
+                    _2048_Pantalla.getMainActivity().saveScore();
                     new AlertDialog.Builder(getContext()).setTitle("").setMessage("Has ganado").setPositiveButton("Volver al menu", new DialogInterface.OnClickListener() {
 
                         @Override
@@ -375,4 +378,23 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         }
     }
 
+    public _2048_Card[][] getCardsMapOld() {
+        return cardsMapOld;
+    }
+
+    public void setCardsMapOld(_2048_Card[][] cardsMapOld) {
+        this.cardsMapOld = cardsMapOld;
+    }
+
+    private void saveMovement(){
+        for (int y = 0; y < Config.LINES_2048; y++) {
+            for (int x = 0; x < Config.LINES_2048; x++) {
+                cardsMapOld[x][y].setNum(cardsMap[x][y].getNum());
+            }
+        }
+    }
+
+    public int getScoreOld() {
+        return scoreOld;
+    }
 }

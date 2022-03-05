@@ -109,9 +109,10 @@
     </FrameLayout>
 
     <TextView
+        android:gravity="center_horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="App info"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/app_info"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

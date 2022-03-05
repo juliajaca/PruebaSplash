@@ -36,7 +36,7 @@
                 android:id="@+id/label4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ordenar por campo: " />
+                android:text="Ver por:" />
             <Spinner
                 android:id="@+id/spinnerCampo"
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                 android:id="@+id/label5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="en orden: " />
+                android:text="orden:" />
             <Spinner
                 android:id="@+id/spinnerOrden"
                 android:layout_width="wrap_content"

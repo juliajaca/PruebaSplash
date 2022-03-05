@@ -1,6 +1,7 @@
 package com.example.pruebasplash;
 
 public class Config {
+    public static final int  NUM_PEGS = 32;
     public static final int LINES_2048 = 4;
     public static final int LINES_PEG = 7;
     public static final int[][] NUM_MOVIMIENTOS_PEG = {

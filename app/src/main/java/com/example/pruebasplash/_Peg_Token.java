@@ -1,6 +1,7 @@
 package com.example.pruebasplash;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Gravity;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 public class _Peg_Token extends FrameLayout {
 
-
+    private _Peg_Logica logica;
     private TextView label;
     private View background;
     public enum TiposEstados {
@@ -37,7 +38,18 @@ public class _Peg_Token extends FrameLayout {
 
     public _Peg_Token(Context context) {
         super(context);
+        darEstilos();
+    }
 
+
+    public _Peg_Token(Context context, _Peg_Logica logica) {
+        super(context);
+        this.logica = logica;
+        darEstilos();
+
+    }
+
+    private void darEstilos(){
         LayoutParams lp = null;
 
         background = new View(getContext());
@@ -56,39 +68,33 @@ public class _Peg_Token extends FrameLayout {
         addView(label, lp);
 
     }
-
     public void setListener(){
         setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                _Peg_Logica.getMainActivity().jugar(posicion);
+                logica.jugar(posicion);
             }
         });
     }
-    public void setLabel(TextView label){
-        this.label = label;
-    };
+
 
     public void setEstadoFicha(TiposEstados input) {
         estadoFicha = input;
 
         switch (estadoFicha) {
             case NADA:
-                background.setBackgroundColor(0xffeee4de);
-                label.setText("");
+                background.setBackgroundColor(getResources().getColor(R.color.white));
+                label.setBackgroundResource(0);
                 break;
             case HUECO:
-                background.setBackgroundColor(0xffeee4da);
+                background.setBackgroundColor(getResources().getColor(R.color.taupe_grey));
                 label.setBackgroundResource(R.drawable.sin_ficha);
-                label.setText("o");
                 break;
             case FICHA:
-                background.setBackgroundColor(0xffeee4da);
-                //background.setBackgroundColor(0xffede0c8);
+                background.setBackgroundColor(getResources().getColor(R.color.taupe_grey));
                 label.setBackgroundResource(R.drawable.con_ficha);
-                label.setText("F");
                 break;
             case PULSADA:
-                //background.setBackgroundColor(0xfff2b179);
+                background.setBackgroundColor(getResources().getColor(R.color.taupe_grey));
                 label.setBackgroundResource(R.drawable.pulsada);
                 break;
             default:

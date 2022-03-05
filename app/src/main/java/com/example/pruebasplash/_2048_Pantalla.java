@@ -20,21 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class _2048_Pantalla extends AppCompatActivity {
-
     private int score = 0;
     private TextView tvScore,tvBestScore;
     private LinearLayout root = null;
-    private ImageView btnNewGame;
+    private ImageView btnNewGame, btnUndo;
     private _2048_Logica gameView;
     private _2048_Animation animLayer = null;
 
     private static _2048_Pantalla mainActivity = null;
+    private DBHandler dbHandler ;
 
     public static _2048_Pantalla getMainActivity() {
         return mainActivity;
     }
 
-    public static final String SP_KEY_BEST_SCORE = "bestScore";
     public _2048_Pantalla() {
         mainActivity = this;
     }
@@ -48,7 +47,7 @@ public class _2048_Pantalla extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        Toast.makeText(_2048_Pantalla.this,"creae", Toast.LENGTH_LONG).show();
+        //Toast.makeText(_2048_Pantalla.this,"creae", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_2048_pantalla);
 
         root = (LinearLayout) findViewById(R.id.container);
@@ -60,14 +59,32 @@ public class _2048_Pantalla extends AppCompatActivity {
         gameView = (_2048_Logica) findViewById(R.id.gameView);
 
         btnNewGame = (ImageView) findViewById(R.id.btnNewGame);
+        btnUndo = (ImageView) findViewById(R.id.btnUndo);
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
             gameView.startGame();
         }});
 
-        animLayer = (_2048_Animation) findViewById(R.id.animLayer);
+        btnUndo.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                _2048_Card[][] cartasOld = gameView.getCardsMapOld();
+                _2048_Card[][] cartas = gameView.getCardsMap();
 
+                for (int y = 0; y < Config.LINES_2048; y++) {
+                    for (int x = 0; x < Config.LINES_2048; x++) {
+                       cartas[x][y].setNum(cartasOld[x][y].getNum());
+                    }
+                }
+                score = new Integer(gameView.getScoreOld());
+                showScore();
+            }});
+
+        animLayer = (_2048_Animation) findViewById(R.id.animLayer);
+        dbHandler = new DBHandler(_2048_Pantalla.this);
         if (savedInstanceState != null) {
+            score = (int) savedInstanceState.getSerializable("score");
+            showScore();
+            addScore(0);
             _2048_Logica gameViewGuardado = (_2048_Logica) savedInstanceState.getSerializable(
                     "gameView");
             ViewGroup parent = (ViewGroup)gameView.getParent();
@@ -144,22 +161,22 @@ public class _2048_Pantalla extends AppCompatActivity {
     }
 
     public void addScore(int s){
+        //scoreOld =  new Integer(score);
         score+=s;
         showScore();
 
         int maxScore = Math.max(score, getBestScore());
-        saveBestScore(maxScore);
         showBestScore(maxScore);
     }
 
-    public void saveBestScore(int s){
-        SharedPreferences.Editor e = getPreferences(MODE_PRIVATE).edit();
-        e.putInt(SP_KEY_BEST_SCORE, s);
-        e.commit();
+    public void saveScore(){
+        dbHandler.guardarPuntuacion(Config.LOGGED_USER, "2048", this.score);
     }
 
+
     public int getBestScore(){
-        return getPreferences(MODE_PRIVATE).getInt(SP_KEY_BEST_SCORE, 0);
+        int maxPunt = dbHandler.getMejorPuntuacion(Config.LOGGED_USER, "2048");
+        return maxPunt;
     }
 
     public void showBestScore(int s){
@@ -174,18 +191,17 @@ public class _2048_Pantalla extends AppCompatActivity {
     public void onSaveInstanceState(Bundle saveInstanceState) {
         saveInstanceState.putSerializable("gameView",gameView );
         saveInstanceState.putSerializable("animLayer",animLayer );
+        saveInstanceState.putSerializable("score",score );
         super.onSaveInstanceState(saveInstanceState);
 
     }
-
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-            super.onRestoreInstanceState(savedInstanceState);
-            gameView = (_2048_Logica) savedInstanceState.getSerializable("gameView");
-            //animLayer = (_2048_Animation)  savedInstanceState.getSerializable("animLayer");
-
+        super.onRestoreInstanceState(savedInstanceState);
+        gameView = (_2048_Logica)  savedInstanceState.getSerializable("gameView");
 
     }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -222,4 +238,7 @@ public class _2048_Pantalla extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
+    public int getScore() {
+        return score;
+    }
 }
