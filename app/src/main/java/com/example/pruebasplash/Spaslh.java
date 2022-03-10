@@ -25,7 +25,18 @@ public class Spaslh extends AppCompatActivity {
     int index;
     long delay = 200;
     Handler handler = new Handler();
-
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            //when runnable is run, set the text
+            textView.setText(charSequence.subSequence(0, index++));
+            //check condition
+            if (index <= charSequence.length()) {
+                //When index is equial to text length   --> run handler
+                handler.postDelayed(runnable, delay);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +54,32 @@ public class Spaslh extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        runAnimations();
+
+        //Initializa handler
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //redirect to main activity
+                startActivity(new Intent(Spaslh.this, Login.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                // finish activity
+                finish();
+            }
+        }, 6000);
+    }
+
+    private void runAnimations() {
         // Initializa top animation
-        Animation animation1 = AnimationUtils.loadAnimation(this,
-               R.anim.top_wave );
+        Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.top_wave);
 
         //start top animacion
         ivTop.setAnimation(animation1);
 
         //Initialze  object animator
-        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
-                ivHeart,
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(ivHeart,
                 PropertyValuesHolder.ofFloat("scaleX", 1.2f),
-                PropertyValuesHolder.ofFloat("scaleY", 1.2f)
-        );
+                PropertyValuesHolder.ofFloat("scaleY", 1.2f));
 
         //set duration
         objectAnimator.setDuration(500);
@@ -71,51 +95,17 @@ public class Spaslh extends AppCompatActivity {
         animatText("JuliGames presents");
         //load GIF
         Glide.with(this).asGif()
-               //.load("https://upload.wikimedia.org/wikipedia/commons/b/bd/Wave_group.gif")
-               //.load("https://upload.wikimedia.org/wikipedia/commons/a/a5/Cochlea_wave_animated.gif")
                 .load("https://upload.wikimedia.org/wikipedia/commons/1/1f/Wave_equation_1D_fixed_endpoints.gif")
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(ivBeat);
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivBeat);
         //initializa botton animation
-        Animation animation2 = AnimationUtils.loadAnimation(this,
-                R.anim.bottom_wavw);
+        Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.bottom_wavw);
         //Start nimation
         ivBottom.setAnimation(animation2);
-
-        //Initializa handler
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //redirect to main activity
-                //startActivity(new Intent(Spaslh.this, Menu.class)
-                        startActivity(new Intent(Spaslh.this, Login.class)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                // finish activity
-                finish();
-            }
-        }, 4000);
-
-
-
-
     }
 
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            //when runnable is run, set the text
-            textView.setText(charSequence.subSequence(0, index++));
-            //check condition
-            if(index <= charSequence.length()){
-                //When index is equial to text length   --> run handler
-                handler.postDelayed(runnable, delay);
-            }
-        }
-    };
-
-    //Create animated text method
-    public void animatText(CharSequence cs){
+    public void animatText(CharSequence cs) {
+        //Create animated text method
         //set text
         charSequence = cs;
         //clear index
@@ -126,7 +116,5 @@ public class Spaslh extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         // run handler
         handler.postDelayed(runnable, delay);
-
-
     }
 }

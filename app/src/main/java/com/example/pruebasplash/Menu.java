@@ -22,7 +22,6 @@ public class Menu extends AppCompatActivity {
         menuList = (ListView) findViewById(android.R.id.list);
         ArrayAdapter<String> adapt = new ArrayAdapter<String>(this, R.layout.menu_item, getResources().getStringArray(R.array.menu));
         menuList.setAdapter(adapt);
-
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                 TextView textView = (TextView) itemClicked;
@@ -45,7 +44,6 @@ public class Menu extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -67,5 +65,4 @@ public class Menu extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

@@ -3,6 +3,7 @@ package com.example.pruebasplash;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import java.util.List;
 public class _2048_Animation extends FrameLayout implements Serializable {
 
     public List<_2048_Card> cards = new ArrayList<_2048_Card>();
+    MediaPlayer ring  = MediaPlayer.create(getContext(),R.raw.ball_tap);;
 
     public _2048_Animation(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -36,7 +38,6 @@ public class _2048_Animation extends FrameLayout implements Serializable {
 
     public _2048_Animation(Context context) {
         super(context);
-
         initLayer();
     }
 
@@ -58,12 +59,14 @@ public class _2048_Animation extends FrameLayout implements Serializable {
             to.getLabel().setVisibility(View.INVISIBLE);
         }
         TranslateAnimation ta = new TranslateAnimation(0, Config.CARD_WIDTH*(toX-fromX), 0, Config.CARD_WIDTH*(toY-fromY));
-        //Toast.makeText(((Activity) getContext()), "fromX " + 0 +", tox "+Config.CARD_WIDTH*(toX-fromX)+", y la y "+Config.CARD_WIDTH*(toY-fromY), Toast.LENGTH_SHORT).show();
         ta.setDuration(200);
+        //ring = MediaPlayer.create(getContext(),R.raw.ball_tap);
         ta.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+                    ring.start();
+            }
 
             @Override
             public void onAnimationRepeat(Animation animation) {}
@@ -74,6 +77,7 @@ public class _2048_Animation extends FrameLayout implements Serializable {
                 recycleCard(c);
             }
         });
+
         c.startAnimation(ta);
     }
 

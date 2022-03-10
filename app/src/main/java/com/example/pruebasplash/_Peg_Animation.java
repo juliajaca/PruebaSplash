@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class _Peg_Animation extends FrameLayout implements Serializable {
     private List<_Peg_Token> tokens = new ArrayList<_Peg_Token>();
+    MediaPlayer ring  = MediaPlayer.create(getContext(),R.raw.quick_jump_arcade_game);
     private _Peg_Logica gameView;
 
     public _Peg_Animation(Context context, AttributeSet attrs, int defStyle) {
@@ -44,18 +46,18 @@ public class _Peg_Animation extends FrameLayout implements Serializable {
         final _Peg_Token c = getCard();
 
         LayoutParams lp = new LayoutParams(Config.TOKEN_WIDTH, Config.TOKEN_WIDTH);
-        //lp.gravity = Gravity.CENTER; //nuevo
         lp.leftMargin = fromX*Config.TOKEN_WIDTH;
         lp.topMargin = fromY*Config.TOKEN_WIDTH;
         c.setLayoutParams(lp);
 
         TranslateAnimation ta = new TranslateAnimation(0, Config.TOKEN_WIDTH*(toX-fromX), 0, Config.TOKEN_WIDTH*(toY-fromY));
-        ta.setDuration(1000);
+        ta.setDuration(400);
 
         ta.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 from.setEstadoFicha(_Peg_Token.TiposEstados.HUECO);
+                ring.start();
             }
 
             @Override
@@ -99,7 +101,7 @@ public class _Peg_Animation extends FrameLayout implements Serializable {
 
     public void createScaleTo1(_Peg_Token target){
         ScaleAnimation sa = new ScaleAnimation(1f, 0.1f, 1f, 0.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        sa.setDuration(500);
+        sa.setDuration(200);
         target.setAnimation(null);
         sa.setAnimationListener(new Animation.AnimationListener() {
 
@@ -112,8 +114,6 @@ public class _Peg_Animation extends FrameLayout implements Serializable {
             @Override
             public void onAnimationEnd(Animation animation) {
                 crecer(target);
-
-
             }
         });
         target.getLabel().startAnimation(sa);
@@ -124,7 +124,7 @@ public class _Peg_Animation extends FrameLayout implements Serializable {
     public void crecer(_Peg_Token target){
         target.setEstadoFicha(_Peg_Token.TiposEstados.HUECO);
         ScaleAnimation sa = new ScaleAnimation(0.1f, 1f, 0.1f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        sa.setDuration(500);
+        sa.setDuration(200);
         target.setAnimation(null);
 
         target.getLabel().startAnimation(sa);

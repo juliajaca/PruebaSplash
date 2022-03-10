@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 
@@ -27,10 +25,8 @@ public class Login extends AppCompatActivity {
         botonEnviarDatos = findViewById(R.id.botonIniciarSesion);
         botonCrearCuenta = findViewById(R.id.buttonCrearcuenta);
 
-        // creating a new dbhandler class and passing our context to it.
         dbHandler = new DBHandler(Login.this);
 
-        // //------------------------------BOTON AÑADIR COMENTARIO
         botonEnviarDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,28 +35,25 @@ public class Login extends AppCompatActivity {
                 contraseña = cajaContraseña.getText().toString();
 
                 // validating if the text fields are empty or not.
-                if ((nombre.isEmpty()|| nombre.length() == 0 || nombre.equals("") || nombre == null ) ||
-                        (  contraseña.isEmpty() || contraseña.length() == 0 || contraseña.equals("") || contraseña == null)) {
-                    Toasty.error(Login.this, "Please enter alll the data...", Toasty.LENGTH_SHORT, true).show();
+                if ((nombre.isEmpty() || nombre.length() == 0 || nombre.equals("") || nombre == null) ||
+                        (contraseña.isEmpty() || contraseña.length() == 0 || contraseña.equals("") || contraseña == null)) {
+                    Toasty.error(Login.this, "Please enter all the data...", Toasty.LENGTH_SHORT, true).show();
 
                     return;
                 }
                 // on below line we are calling a method to add new course to sqlite data and pass all our values to it.
-                JugadorModel jugadormodel = new JugadorModel(nombre, contraseña);
-                String user = dbHandler.buscarJugador(jugadormodel);
+                String user = dbHandler.buscarJugador(new JugadorModel(nombre, contraseña));
 
-                if (user != null){
+                if (user != null) {
                     Intent i = new Intent(Login.this, Menu.class);
                     i.putExtra("usuario", user);
                     startActivity(i);
                     Config.LOGGED_USER = user;
-                }else{
+                } else {
                     Toasty.error(Login.this, "Username or password incorrect", Toasty.LENGTH_SHORT, true).show();
                 }
-
             }
         });
-
 
         botonCrearCuenta.setOnClickListener(new View.OnClickListener() {
             @Override

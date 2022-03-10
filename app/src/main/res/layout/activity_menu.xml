@@ -9,18 +9,16 @@
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
->
+        android:layout_height="120dp">
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/iv_top"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-
+            android:layout_alignParentBottom="true"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_top_vector" />
 
         <LinearLayout
@@ -35,23 +33,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:text="MAIN MENU"
+                android:text="@string/main_menu"
                 android:textColor="@color/rojo_corazon"
                 android:textSize="32sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/iv_bottom"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_bottom_vector" />
-
     </RelativeLayout>
 
     <ListView
@@ -61,16 +57,13 @@
         android:layout_below="@id/header"
         android:layout_centerHorizontal="true"
         android:paddingTop="16dp" />
-    <!--android:listSelector="@color/black"-->
 
     <ImageView
-
         android:id="@+id/iv_heart"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@android:id/list"
         android:layout_alignParentBottom="true"
-
         android:src="@drawable/ic_heart" />
 
 </RelativeLayout>

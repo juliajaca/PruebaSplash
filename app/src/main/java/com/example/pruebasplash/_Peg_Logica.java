@@ -3,6 +3,7 @@ package com.example.pruebasplash;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -21,7 +22,8 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 public class _Peg_Logica extends LinearLayout implements Serializable {
-    private String[][] tableroJuego ;
+    private MediaPlayer ringOK  = MediaPlayer.create(getContext(),R.raw.retro_click);
+    private MediaPlayer ringNotOK  = MediaPlayer.create(getContext(),R.raw.small_hit);
     private int numPegs ;
     private _Peg_Token[][] tokensMapOld = new _Peg_Token[Config.LINES_PEG][Config.LINES_PEG];
     private _Peg_Token[][] tokensMap = new _Peg_Token[Config.LINES_PEG][Config.LINES_PEG];
@@ -29,30 +31,34 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
     private _Peg_Token huecoDestino;
     private _Peg_Token fichaMedia;
     private int scoreOld;
-
-    public int getScoreOld() {
-        return scoreOld;
-    }
-
+    private Estado estadoJuego;
+    private  _Peg_Logica mainActivity;
+    private _Peg_Pantalla aty ;
     public enum Estado implements  Serializable{
         SELECCION_FICHA_1, SELECCION_FICHA_2, JUEGO_TERMINADO;
     }
 
-    public void setEstadoJuego(Estado estadoJuego) {
-        this.estadoJuego = estadoJuego;
-    }
-
-    private Estado estadoJuego;
-    private  _Peg_Logica mainActivity = null;
-    private _Peg_Pantalla aty ;
-
-
+    //Constructores
     public _Peg_Logica(Context context) {
         super(context);
         mainActivity = this;
         initGameView();
     }
 
+    public _Peg_Logica(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mainActivity = this;
+        initGameView();
+    }
+
+    //Getteres/ssetters
+    public int getScoreOld() {
+        return scoreOld;
+    }
+
+    public void setEstadoJuego(Estado estadoJuego) {
+        this.estadoJuego = estadoJuego;
+    }
 
     public _Peg_Token[][] getTokensMapOld() {
         return tokensMapOld;
@@ -62,12 +68,7 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
         return tokensMap;
     }
 
-    public _Peg_Logica(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mainActivity = this;
-        initGameView();
-    }
-
+    //metodos
     private void calculateCardSize() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager()
@@ -152,12 +153,14 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
         _Peg_Token puntoTocado = tokensMap[posicionPulsada.x][posicionPulsada.y];
         if (estadoJuego == Estado.SELECCION_FICHA_1 &&
                 puntoTocado.getEstadoFicha() == _Peg_Token.TiposEstados.FICHA) {
+            ringOK.start();
             estadoJuego = Estado.SELECCION_FICHA_2;
             puntoTocado.setEstadoFicha(_Peg_Token.TiposEstados.PULSADA);
             fichaInicial = puntoTocado;
         } else if (estadoJuego == Estado.SELECCION_FICHA_2) {
             //pulso donde habia pulsado antes
             if (puntoTocado == fichaInicial) {
+                ringNotOK.start();
                 estadoJuego = Estado.SELECCION_FICHA_1;
                 puntoTocado.setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
                 fichaInicial = null;
@@ -180,7 +183,7 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
                     fichaMedia = null;
                     _Peg_Pantalla.getMainActivity().addScore(1);
                 } else {
-                    //hace un sonidito de movimiento invalido resetea las posiciones
+                    ringNotOK.start();
                     estadoJuego = Estado.SELECCION_FICHA_1;
                     fichaInicial.setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
                     fichaInicial = null;
@@ -253,8 +256,6 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
         Log.d("con", "Ha terminado");
         return true;
     }
-
-
 
     private void guardarMovimient() {     // guardo el movimiento
       copiarTokensMapOld();

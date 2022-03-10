@@ -145,7 +145,6 @@ public class _2048_Pantalla extends AppCompatActivity {
     }
 
     public void saveScore() {
-
         PuntuacionModel puntuacion= new PuntuacionModel(Config.LOGGED_USER, this.score, this.chronometer.getText().toString(),getNivelDificultad(), "2048");
         dbHandler.guardarPuntuacion(puntuacion);
     }

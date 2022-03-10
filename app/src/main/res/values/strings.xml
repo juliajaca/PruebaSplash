@@ -2,6 +2,20 @@
     <string name="app_name">JuliGames Center</string>
     <string name="app_info">JuliGames 2022</string>
     <string name="select_a_difficulty_level">Select a difficulty level</string>
+    <string name="enterAllDataWarning">Please, enter all the data</string>
+    <string name="nameExistsWarning">That name already exists</string>
+    <string name="passwordsNotMatchWarning">Passwords do not match</string>
+    <string name="welcome">Welcome!</string>
+    <string name="otherWarning">Other error</string>
+    <string name="typePasswordHint">Type the password</string>
+    <string name="repeatPasswordHint">Repeat the password</string>
+    <string name="userNameHint">User name</string>
+    <string name="createAccountBtn">Create account</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="need_an_accountBtn">Need an account?</string>
+    <string name="login">Login</string>
+    <string name="main_menu">MAIN MENU</string>
 
     <string-array name="campos_tabla_puntuacion">
         <item>puntuacion</item>

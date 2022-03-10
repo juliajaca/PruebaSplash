@@ -44,7 +44,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                     offsetX = event.getX()-startX;
                     offsetY = event.getY()-startY;
 
-
                     if (Math.abs(offsetX)>Math.abs(offsetY)) {
                         if (offsetX<-5) {
                             swipeLeft();
@@ -58,7 +57,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                             swipeDown();
                         }
                     }
-
                     break;
             }
             return true;

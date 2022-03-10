@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/fondo_login"
-                android:hint="Usuario"
+                android:hint="@string/user"
                 android:maxLength="20"
                 android:paddingLeft="5dp" />
 
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/fondo_login"
-                android:hint="Contraseña"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLength="20"
                 android:paddingLeft="5dp" />
@@ -87,7 +87,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/boton_login"
-            android:text="Iniciar sesión"
+            android:text="@string/login"
             android:textColor="@color/white" />
 
         <Button
@@ -99,7 +99,7 @@
             android:background="@null"
             android:drawableBottom="@null"
             android:shadowRadius="@null"
-            android:text="¿Necesitas una cuenta?"
+            android:text="@string/need_an_accountBtn"
             android:textColor="@color/rojo_corazon" />
     </LinearLayout>
 
