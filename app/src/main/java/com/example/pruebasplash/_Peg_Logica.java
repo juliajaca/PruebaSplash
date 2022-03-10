@@ -3,9 +3,12 @@ package com.example.pruebasplash;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,20 +18,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class _Peg_Logica extends LinearLayout implements Serializable {
+    private String[][] tableroJuego ;
+    private int numPegs ;
     private _Peg_Token[][] tokensMapOld = new _Peg_Token[Config.LINES_PEG][Config.LINES_PEG];
     private _Peg_Token[][] tokensMap = new _Peg_Token[Config.LINES_PEG][Config.LINES_PEG];
     private _Peg_Token fichaInicial;
     private _Peg_Token huecoDestino;
     private _Peg_Token fichaMedia;
-    private int numeroFichas = Config.NUM_PEGS;
+    private int scoreOld;
+
+    public int getScoreOld() {
+        return scoreOld;
+    }
 
     public enum Estado implements  Serializable{
         SELECCION_FICHA_1, SELECCION_FICHA_2, JUEGO_TERMINADO;
-    }
-
-    public Estado getEstadoJuego() {
-        return estadoJuego;
     }
 
     public void setEstadoJuego(Estado estadoJuego) {
@@ -37,10 +44,8 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
 
     private Estado estadoJuego;
     private  _Peg_Logica mainActivity = null;
+    private _Peg_Pantalla aty ;
 
-    public  _Peg_Logica getMainActivity() {
-        return mainActivity;
-    }
 
     public _Peg_Logica(Context context) {
         super(context);
@@ -48,48 +53,13 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
         initGameView();
     }
 
-    public void setNumeroFichas(int numeroFichas) {
-        this.numeroFichas = numeroFichas;
-    }
 
     public _Peg_Token[][] getTokensMapOld() {
         return tokensMapOld;
     }
 
-    public void setTokensMapOld(_Peg_Token[][] tokensMapOld) {
-        this.tokensMapOld = tokensMapOld;
-    }
-
     public _Peg_Token[][] getTokensMap() {
         return tokensMap;
-    }
-
-    public void setTokensMap(_Peg_Token[][] tokensMap) {
-        this.tokensMap = tokensMap;
-    }
-
-    public _Peg_Token getFichaInicial() {
-        return fichaInicial;
-    }
-
-    public void setFichaInicial(_Peg_Token fichaInicial) {
-        this.fichaInicial = fichaInicial;
-    }
-
-    public _Peg_Token getHuecoDestino() {
-        return huecoDestino;
-    }
-
-    public void setHuecoDestino(_Peg_Token huecoDestino) {
-        this.huecoDestino = huecoDestino;
-    }
-
-    public _Peg_Token getFichaMedia() {
-        return fichaMedia;
-    }
-
-    public void setFichaMedia(_Peg_Token fichaMedia) {
-        this.fichaMedia = fichaMedia;
     }
 
     public _Peg_Logica(Context context, AttributeSet attrs) {
@@ -141,9 +111,11 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
     }
 
     public void startGame() {
-        _Peg_Pantalla aty = _Peg_Pantalla.getMainActivity();
+        numPegs = 0;
+        aty = _Peg_Pantalla.getMainActivity();
         aty.clearScore();
         aty.showBestScore(aty.getBestScore());
+        scoreOld = new Integer(aty.getScore());
         this.estadoJuego = Estado.SELECCION_FICHA_1;
 
         for (int y = 0; y < Config.LINES_PEG; y++) {
@@ -151,24 +123,32 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
                 tokensMap[x][y].setPosicion(new Point(x, y));
                 tokensMapOld[x][y].setPosicion(new Point(x, y));
                 tokensMap[x][y].setListener();
-                if ((x == 0 || x == 1 || x == 5 || x == 6) &&
-                        (y == 0 || y == 1 || y == 5 || y == 6)) {
-                    tokensMap[x][y].setEstadoFicha(_Peg_Token.TiposEstados.NADA);
-                    tokensMapOld[x][y].setEstadoFicha(_Peg_Token.TiposEstados.NADA);
-                } else if (x == 3 && y == 3) {
-                    tokensMap[x][y].setEstadoFicha(_Peg_Token.TiposEstados.HUECO);
-                    tokensMapOld[x][y].setEstadoFicha(_Peg_Token.TiposEstados.HUECO);
-                } else {
-                    tokensMap[x][y].setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
-                    tokensMapOld[x][y].setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
+                switch (aty.getTABLERO_JUEGO()[y][x]){
+                    case "HUECO":
+                        tokensMap[x][y].setEstadoFicha(_Peg_Token.TiposEstados.HUECO);
+                        tokensMapOld[x][y].setEstadoFicha(_Peg_Token.TiposEstados.HUECO);
+                        break;
+                    case "FICHA":
+                        tokensMap[x][y].setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
+                        tokensMapOld[x][y].setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
+                        numPegs++;
+                        break;
+                    case "NADA":
+                        tokensMap[x][y].setEstadoFicha(_Peg_Token.TiposEstados.NADA);
+                        tokensMapOld[x][y].setEstadoFicha(_Peg_Token.TiposEstados.NADA);
+
+                        break;
                 }
+
             }
         }
+        Log.d("con" , "hat " +numPegs +" pegs");
 
 
     }
 
     public void jugar(Point posicionPulsada) {
+        scoreOld = new Integer(aty.getScore());
         _Peg_Token puntoTocado = tokensMap[posicionPulsada.x][posicionPulsada.y];
         if (estadoJuego == Estado.SELECCION_FICHA_1 &&
                 puntoTocado.getEstadoFicha() == _Peg_Token.TiposEstados.FICHA) {
@@ -186,9 +166,7 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
                 if (movimentoValido(fichaInicial, puntoTocado)) {
                     //hace el salto
                     huecoDestino = puntoTocado;
-
                     guardarMovimient();
-
                     _Peg_Animation animacion = _Peg_Pantalla.getMainActivity().getAnimLayer();
                     animacion.createScaleTo1(fichaMedia);
                     animacion.createMoveAnim(fichaInicial, huecoDestino,
@@ -200,17 +178,7 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
                     fichaInicial = null;
                     huecoDestino = null;
                     fichaMedia = null;
-                    numeroFichas--;
-                    _Peg_Pantalla.getMainActivity().getScore();
-                    if (juegoTerminado()) {
-                        estadoJuego = estadoJuego.JUEGO_TERMINADO;
-                        if (numeroFichas == 1) {
-                            Toast.makeText(getContext(), "Juego has ganado", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
+                    _Peg_Pantalla.getMainActivity().addScore(1);
                 } else {
                     //hace un sonidito de movimiento invalido resetea las posiciones
                     estadoJuego = Estado.SELECCION_FICHA_1;
@@ -220,6 +188,21 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
             }
         }
 
+    }
+
+    public void notificarFinal(){
+        _Peg_Pantalla.getMainActivity().getChronometer().stop();
+        aty.saveScore();
+        // impido que el usuario haga undo
+        copiarTokensMapOld();
+        scoreOld = new Integer(aty.getScore());
+        Toasty.Config.getInstance().setGravity(Gravity.TOP|Gravity.CENTER_VERTICAL, 0, Config.TOKEN_WIDTH*12).apply();
+        if (aty.getScore() == numPegs-1) {
+                Toasty.success(aty.getApplicationContext(), "VICTORY", Toast.LENGTH_SHORT,true).show();
+
+        } else {
+            Toasty.error(aty.getApplicationContext(), "DEFEAT", Toast.LENGTH_SHORT, true).show();
+        }
     }
 
     public boolean movimentoValido(_Peg_Token ficha1, _Peg_Token ficha2) {
@@ -246,8 +229,8 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
     }
 
     public boolean juegoTerminado() {
-        Log.d("con", "mira si se ha terminado");
-        if (numeroFichas == 1) {
+        if (aty.getScore() == numPegs-1) {
+
             return true;
         }
         for (int x = 0; x < Config.LINES_PEG; x++) {
@@ -258,7 +241,7 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
                         int saltoY = y + Config.NUM_MOVIMIENTOS_PEG[k][1];
                         if (saltoX >= 0 && saltoX < Config.LINES_PEG && saltoY >= 0 && saltoY < Config.LINES_PEG) {
                             if (movimentoValido(tokensMap[x][y], tokensMap[saltoX][saltoY])) {
-                                //Log.d("con", "Movimiento valido" + saltoX + saltoY);
+                                Log.d("con", "Movimiento valido en peg"+ tokensMap[x][y].getPosicion().x + tokensMap[x][y].getPosicion().y+ "a x = "+ saltoX + "e Y: "+ saltoY);
                                 return false;
                             }
                         }
@@ -266,22 +249,31 @@ public class _Peg_Logica extends LinearLayout implements Serializable {
                 }
             }
         }
+
         Log.d("con", "Ha terminado");
         return true;
     }
 
-    public int getNumeroFichas() {
-        return numeroFichas;
-    }
+
 
     private void guardarMovimient() {     // guardo el movimiento
+      copiarTokensMapOld();
+      actualizarTokensMapOld();
+
+    }
+
+    private void copiarTokensMapOld(){
         for (int y = 0; y < tokensMapOld.length; y++) {
             for (int x = 0; x < tokensMapOld[0].length; x++) {
                 tokensMapOld[x][y].setEstadoFicha(tokensMap[x][y].getEstadoFicha());
             }
         }
+    }
+
+    private void actualizarTokensMapOld(){
         tokensMapOld[fichaMedia.getPosicion().x][fichaMedia.getPosicion().y].setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
         tokensMapOld[fichaInicial.getPosicion().x][fichaInicial.getPosicion().y].setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
         tokensMapOld[huecoDestino.getPosicion().x][huecoDestino.getPosicion().y].setEstadoFicha(_Peg_Token.TiposEstados.HUECO);
+
     }
 }

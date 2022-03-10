@@ -47,9 +47,9 @@ public class CreacionCuenta extends AppCompatActivity {
                 contraseña2 =  etPassCaja2.getText().toString();
 
                 // validating if the text fields are empty or not.
-
                 if(isCamposValidos(nombre, contraseña, contraseña2)){
-                    dbHandler.añadirJugador(nombre, contraseña);
+                    JugadorModel jugador  = new JugadorModel(nombre, contraseña);
+                    dbHandler.añadirJugador(jugador);
                     mostrarMensaje("correcto");
                     Intent i = new Intent(CreacionCuenta.this, Menu.class);
                     i.putExtra("usuario", nombre);
@@ -57,8 +57,6 @@ public class CreacionCuenta extends AppCompatActivity {
                     Config.LOGGED_USER = nombre;
                 }
             }
-
-
     } );
 
     }

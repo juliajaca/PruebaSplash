@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class _2048_Card extends FrameLayout {
+import java.io.Serializable;
+
+public class _2048_Card extends FrameLayout  {
 
     private TextView label;
     private View background;
@@ -82,9 +84,15 @@ public class _2048_Card extends FrameLayout {
                 break;
             case 1024:
                 label.setBackgroundColor(0xffedc53f);
+                if(Config.LINES_2048 == 6){
+                    label.setTextSize(20);
+                }
                 break;
             case 2048:
                 label.setBackgroundColor(0xffedc22e);
+                if(Config.LINES_2048 == 6){
+                    label.setTextSize(20);
+                }
                 break;
             default:
                 label.setBackgroundColor(0xff3c3a32);

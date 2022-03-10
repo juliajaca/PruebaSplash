@@ -5,7 +5,6 @@
         <item>Play Peg Solitaire</item>
         <item>View Scores</item>
         <item>Settings</item>
-        <item>Help</item>
-        <item>Log out</item>
+
     </string-array>
 </resources>

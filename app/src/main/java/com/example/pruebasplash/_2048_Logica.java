@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,20 +22,51 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class _2048_Logica extends LinearLayout implements Serializable {
 
-
+    // Atributos
     private _2048_Card[][] cardsMapOld = new _2048_Card[Config.LINES_2048][Config.LINES_2048];
     private _2048_Card[][] cardsMap = new _2048_Card[Config.LINES_2048][Config.LINES_2048];
     private List<Point> emptyPoints = new ArrayList<Point>();
     private int scoreOld ;
-    private _2048_Pantalla aty ;
+    private OnTouchListener listenerSwipe = new OnTouchListener() {
+        private float startX,startY,offsetX,offsetY;
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    startX = event.getX();
+                    startY = event.getY();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    offsetX = event.getX()-startX;
+                    offsetY = event.getY()-startY;
 
-    public _2048_Card[][] getCardsMap() {
-        return cardsMap;
-    }
 
+                    if (Math.abs(offsetX)>Math.abs(offsetY)) {
+                        if (offsetX<-5) {
+                            swipeLeft();
+                        }else if (offsetX>5) {
+                            swipeRight();
+                        }
+                    }else{
+                        if (offsetY<-5) {
+                            swipeUp();
+                        }else if (offsetY>5) {
+                            swipeDown();
+                        }
+                    }
 
+                    break;
+            }
+            return true;
+        }
+
+    };
+
+    //Constructores
     public _2048_Logica(Context context) {
         super(context);
         initGameView();
@@ -45,6 +77,20 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         initGameView();
     }
 
+    //Getters
+    public int getScoreOld() {
+        return scoreOld;
+    }
+
+    public _2048_Card[][] getCardsMap() {
+        return cardsMap;
+    }
+
+    public _2048_Card[][] getCardsMapOld() {
+        return cardsMapOld;
+    }
+
+    //METODOS
     private void calculateCardSize(){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager()
@@ -60,43 +106,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         setOrientation(LinearLayout.VERTICAL);
         setBackgroundColor(0xffbbada0);
         addCards(Config.CARD_WIDTH,Config.CARD_WIDTH);
-
-        setOnTouchListener(new View.OnTouchListener() {
-
-            private float startX,startY,offsetX,offsetY;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        startX = event.getX();
-                        startY = event.getY();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        offsetX = event.getX()-startX;
-                        offsetY = event.getY()-startY;
-
-
-                        if (Math.abs(offsetX)>Math.abs(offsetY)) {
-                            if (offsetX<-5) {
-                                swipeLeft();
-                            }else if (offsetX>5) {
-                                swipeRight();
-                            }
-                        }else{
-                            if (offsetY<-5) {
-                                swipeUp();
-                            }else if (offsetY>5) {
-                                swipeDown();
-                            }
-                        }
-
-                        break;
-                }
-                return true;
-            }
-        });
 
     }
 
@@ -124,11 +133,11 @@ public class _2048_Logica extends LinearLayout implements Serializable {
     }
 
     public void startGame(){
-        aty = _2048_Pantalla.getMainActivity();
-        scoreOld = new Integer(aty.getScore());
+        setOnTouchListener(listenerSwipe);
+        scoreOld = new Integer(_2048_Pantalla.getMainActivity().getScore());
 
-        aty.clearScore();
-        aty.showBestScore(aty.getBestScore());
+        _2048_Pantalla.getMainActivity().clearScore();
+        _2048_Pantalla.getMainActivity().showBestScore(_2048_Pantalla.getMainActivity().getBestScore());
 
         for (int y = 0; y < Config.LINES_2048; y++) {
             for (int x = 0; x < Config.LINES_2048; x++) {
@@ -141,7 +150,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
     }
 
     private void addRandomNum(){
-
         emptyPoints.clear();
 
         for (int y = 0; y < Config.LINES_2048; y++) {
@@ -153,7 +161,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         }
 
         if (emptyPoints.size()>0) {
-
             Point p = emptyPoints.remove((int)(Math.random()*emptyPoints.size()));
             cardsMap[p.x][p.y].setNum(Math.random()>0.1?2:4);
 
@@ -161,10 +168,9 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         }
     }
 
-
     private void swipeLeft(){
         saveMovement();
-        scoreOld = new Integer(aty.getScore());
+        scoreOld = new Integer(_2048_Pantalla.getMainActivity().getScore());
         boolean merge = false;
 
         for (int y = 0; y < Config.LINES_2048; y++) {
@@ -203,9 +209,10 @@ public class _2048_Logica extends LinearLayout implements Serializable {
             checkComplete();
         }
     }
+
     private void swipeRight(){
         saveMovement();
-        scoreOld = new Integer(aty.getScore());
+        scoreOld = new Integer(_2048_Pantalla.getMainActivity().getScore());
         boolean merge = false;
 
         for (int y = 0; y < Config.LINES_2048; y++) {
@@ -228,7 +235,6 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                             _2048_Pantalla.getMainActivity().addScore(cardsMap[x][y].getNum());
                             merge = true;
                         }
-
                         break;
                     }
                 }
@@ -242,9 +248,10 @@ public class _2048_Logica extends LinearLayout implements Serializable {
             checkComplete();
         }
     }
+
     private void swipeUp(){
       saveMovement();
-        scoreOld = new Integer(aty.getScore());
+        scoreOld = new Integer(_2048_Pantalla.getMainActivity().getScore());
         boolean merge = false;
 
         for (int x = 0; x < Config.LINES_2048; x++) {
@@ -257,9 +264,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                             _2048_Pantalla.getMainActivity().getAnimLayer().createMoveAnim(cardsMap[x][y1],cardsMap[x][y], x, x, y1, y);
                             cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
                             cardsMap[x][y1].setNum(0);
-
                             y--;
-
                             merge = true;
                         }else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
                             _2048_Pantalla.getMainActivity().getAnimLayer().createMoveAnim(cardsMap[x][y1],cardsMap[x][y], x, x, y1, y);
@@ -268,9 +273,7 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                             _2048_Pantalla.getMainActivity().addScore(cardsMap[x][y].getNum());
                             merge = true;
                         }
-
                         break;
-
                     }
                 }
             }
@@ -283,9 +286,10 @@ public class _2048_Logica extends LinearLayout implements Serializable {
             checkComplete();
         }
     }
+
     private void swipeDown(){
         saveMovement();
-        scoreOld = new Integer(aty.getScore());
+        scoreOld = new Integer(_2048_Pantalla.getMainActivity().getScore());
         boolean merge = false;
 
         for (int x = 0; x < Config.LINES_2048; x++) {
@@ -324,34 +328,29 @@ public class _2048_Logica extends LinearLayout implements Serializable {
     }
 
     private void checkComplete(){
-
+        int vueltas =0;
         boolean complete = true;
-
-        ALL:
-        for (int y = 0; y < Config.LINES_2048; y++) {
-            for (int x = 0; x < Config.LINES_2048; x++) {
-                if (cardsMap[x][y].getNum()==0||
-                        (x>0&&cardsMap[x][y].equals(cardsMap[x-1][y]))||
-                        (x<Config.LINES_2048-1&&cardsMap[x][y].equals(cardsMap[x+1][y]))||
-                        (y>0&&cardsMap[x][y].equals(cardsMap[x][y-1]))||
-                        (y<Config.LINES_2048-1&&cardsMap[x][y].equals(cardsMap[x][y+1]))) {
-
-                    complete = false;
-                    break ALL;
+        while(complete && vueltas < Config.LINES_2048 * Config.LINES_2048 ){
+            for (int y = 0; y < Config.LINES_2048; y++) {
+                for (int x = 0; x < Config.LINES_2048; x++) {
+                    vueltas++;
+                    if (cardsMap[x][y].getNum()==0||
+                            (x>0&&cardsMap[x][y].equals(cardsMap[x-1][y]))||
+                            (x<Config.LINES_2048-1&&cardsMap[x][y].equals(cardsMap[x+1][y]))||
+                            (y>0&&cardsMap[x][y].equals(cardsMap[x][y-1]))||
+                            (y<Config.LINES_2048-1&&cardsMap[x][y].equals(cardsMap[x][y+1]))) {
+                        complete = false;
+                    }
                 }
             }
+
         }
 
+
         if (complete) {
+            _2048_Pantalla.getMainActivity().getChronometer().stop();
             _2048_Pantalla.getMainActivity().saveScore();
-            new AlertDialog.Builder(getContext()).setTitle("").setMessage("Fin del juego").setPositiveButton("Reiniciar", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    startGame();
-                }
-            }).show();
+            notificarResultado("defeat");
         }
 
     }
@@ -360,30 +359,27 @@ public class _2048_Logica extends LinearLayout implements Serializable {
         for (int y = 0; y < Config.LINES_2048; y++) {
             for (int x = 0; x < Config.LINES_2048; x++) {
                 if (cardsMap[x][y].getNum()==2048) {
+                    this.setOnTouchListener(null);
+                    _2048_Pantalla.getMainActivity().getChronometer().stop();
                     _2048_Pantalla.getMainActivity().saveScore();
-                    new AlertDialog.Builder(getContext()).setTitle("").setMessage("Has ganado").setPositiveButton("Volver al menu", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            Intent intent = new Intent(getContext(), Menu.class);
-                            getContext().startActivity(intent);
-
-
-                        }
-                    }).show();
+                    notificarResultado("victory");
 
                 }
             }
         }
     }
 
-    public _2048_Card[][] getCardsMapOld() {
-        return cardsMapOld;
-    }
+    private void notificarResultado(String resultado){
+        Toasty.Config.getInstance().setGravity(Gravity.TOP|Gravity.CENTER_VERTICAL, 0, Config.CARD_WIDTH*3).apply();
+        switch (resultado){
+            case "victory":
+                Toasty.success(_2048_Pantalla.getMainActivity().getApplicationContext(), "VICTORY", Toast.LENGTH_SHORT,true).show();
+                break;
+            case "defeat":
+                Toasty.error(_2048_Pantalla.getMainActivity().getApplicationContext(), "DEFEAT", Toast.LENGTH_SHORT,true).show();
+                break;
+        }
 
-    public void setCardsMapOld(_2048_Card[][] cardsMapOld) {
-        this.cardsMapOld = cardsMapOld;
     }
 
     private void saveMovement(){
@@ -392,9 +388,5 @@ public class _2048_Logica extends LinearLayout implements Serializable {
                 cardsMapOld[x][y].setNum(cardsMap[x][y].getNum());
             }
         }
-    }
-
-    public int getScoreOld() {
-        return scoreOld;
     }
 }

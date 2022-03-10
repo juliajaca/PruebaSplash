@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pruebasplash">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,17 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PruebaSplash">
         <activity
+            android:name="._Peg_Seleccion_Nivel"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="._2048_Seleccion_Nivel"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Scores"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ModificacionCuenta"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CreacionCuenta"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Login"
             android:exported="true"
@@ -43,7 +54,7 @@
         <activity
             android:name=".Spaslh"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Menu"
             android:exported="true"
@@ -55,7 +66,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

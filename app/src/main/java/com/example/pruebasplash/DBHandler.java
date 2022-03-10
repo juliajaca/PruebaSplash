@@ -24,6 +24,8 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String SCORES_ID_COL = "id";
     private static final String SCORES_NAME_COL = "nombre";
     private static final String SCORES_SCORE_COL = "puntuacion";
+    private static final String SCORES_TIME_COL = "tiempo";
+    private static final String SCORES_LEVEL_COL = "nivel";
     private static final String SCORES_GAME_COL = "juego";
     private ArrayList<PuntuacionModel> puntuacionList = new ArrayList<PuntuacionModel>();
 
@@ -32,21 +34,24 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db1) {
         String query = "CREATE TABLE " + PLAYERS_TABLE_NAME + "("
                 + PLAYERS_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PLAYERS_NAME_COL + " TEXT,"
                 + PLAYERS_PASS_COL + " TEXT);";
-        db.execSQL(query);
+        db1.execSQL(query);
 
         //Creo la tabla de puntuaciones
         String query2 = "CREATE TABLE " + SCORES_TABLE_NAME + "("
                 + SCORES_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + SCORES_NAME_COL + " TEXT,"
                 + SCORES_SCORE_COL + " INT,"
+                + SCORES_TIME_COL + " TEXT,"
+                + SCORES_LEVEL_COL + " TEXT,"
                 + SCORES_GAME_COL + " TEXT);";
-        db.execSQL(query2);
-       addDemoData(db);
+        db1.execSQL(query2);
+
+       addDemoData(db1);
     }
 
     @Override
@@ -55,14 +60,14 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public String buscarJugador(String nombre, String pass ) {
+    public String buscarJugador(JugadorModel jugador ) {
         String buscado = null;
         SQLiteDatabase db = this.getWritableDatabase();
-        String[] args = { nombre, pass };
+        String[] args = { jugador.getNombre(), jugador.getContraseña() };
         Cursor cursor = db.rawQuery("select * from 'tabla_jugadores' where nombre=? and " +
                 "contraseña=?", args, null);
         if (cursor.getCount() != 0) {
-            buscado = nombre;
+            buscado = jugador.getNombre();
         }
         cursor.close();
 
@@ -70,11 +75,11 @@ public class DBHandler extends SQLiteOpenHelper {
         return buscado;
     }
 
-    public void añadirJugador(String nombre, String contraseña){
+    public void añadirJugador(JugadorModel jugadorNuevo){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(PLAYERS_NAME_COL, nombre);
-        values.put(PLAYERS_PASS_COL, contraseña);
+        values.put(PLAYERS_NAME_COL, jugadorNuevo.getNombre());
+        values.put(PLAYERS_PASS_COL, jugadorNuevo.getContraseña());
         db.insert(PLAYERS_TABLE_NAME, null, values);
         db.close();
     }
@@ -94,14 +99,14 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
-    public void actualizarContraseña(String usuario, String contraseña){
+    public void actualizarContraseña(JugadorModel jugador){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(PLAYERS_NAME_COL,usuario); //These Fields should be your String values of actual
+        cv.put(PLAYERS_NAME_COL,jugador.getNombre()); //These Fields should be your String values of actual
         // column names
-        cv.put(PLAYERS_PASS_COL,contraseña);
+        cv.put(PLAYERS_PASS_COL,jugador.getContraseña());
         try {
-            String[] args = { usuario };
+            String[] args = { jugador.getNombre() };
             db.update(PLAYERS_TABLE_NAME, cv, "nombre=?", args);
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,6 +149,10 @@ public class DBHandler extends SQLiteOpenHelper {
                     item.setNombre(cursor.getString(posicionNombre));
                     int posicionPuntuacion = cursor.getColumnIndex(SCORES_SCORE_COL);
                     item.setPuntos(cursor.getInt(posicionPuntuacion));
+                    int posicionNivel = cursor.getColumnIndex(SCORES_LEVEL_COL);
+                    item.setNivel(cursor.getString(posicionNivel));
+                    int posicionTiempo = cursor.getColumnIndex(SCORES_TIME_COL);
+                    item.setTiempo(cursor.getString(posicionTiempo));
                     puntuacionList.add(item);
                 } while (cursor.moveToNext());
             }
@@ -164,12 +173,12 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
-    public int getMejorPuntuacion(String nombreJ, String juego){
+    public int getMejorPuntuacion(PuntuacionModel puntuacion){
         int puntos = 0;
         SQLiteDatabase db = this.getWritableDatabase();
-        String[] args = { nombreJ, juego};
+        String[] args = {puntuacion.getNombre(), puntuacion.getJuego(), puntuacion.getNivel()};
         Cursor cursor = db.rawQuery("select MAX(puntuacion) from 'tabla_puntuaciones' where nombre=? and " +
-                "juego=?", args, null);
+                "juego=?  and  nivel=?" , args, null);
         if (cursor != null) {
             Log.d("con", "hay " + cursor.getCount() + "puntuaciones");
             cursor.moveToFirst();
@@ -180,15 +189,16 @@ public class DBHandler extends SQLiteOpenHelper {
         return puntos;
     }
 
-    public void guardarPuntuacion(String nombreJ, String juego, int puntuacionJ){
+    public void guardarPuntuacion(PuntuacionModel puntuacion){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(SCORES_GAME_COL, juego);
-        values.put(SCORES_SCORE_COL, puntuacionJ);
-        values.put(SCORES_NAME_COL, nombreJ);
+        values.put(SCORES_GAME_COL, puntuacion.getJuego());
+        values.put(SCORES_SCORE_COL, puntuacion.getPuntos());
+        values.put(SCORES_NAME_COL, puntuacion.getNombre());
+        values.put(SCORES_TIME_COL, puntuacion.getTiempo());
+        values.put(SCORES_LEVEL_COL, puntuacion.getNivel());
         db.insert(SCORES_TABLE_NAME, null, values);
         db.close();
-
     }
 
     public void addDemoData(SQLiteDatabase db){
@@ -197,49 +207,61 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(PLAYERS_PASS_COL, "Admin");
         db.insert(PLAYERS_TABLE_NAME, null, values);
 
-        ContentValues values2 = new ContentValues();
-        values2.put(PLAYERS_NAME_COL, "Admin");
-        values2.put(SCORES_SCORE_COL, 200);
-        values2.put(SCORES_GAME_COL, "2048");
-        db.insert(SCORES_TABLE_NAME, null, values2);
-
         ContentValues values3 = new ContentValues();
         values3.put(PLAYERS_NAME_COL, "Julia");
         values3.put(PLAYERS_PASS_COL, "Julia");
         db.insert(PLAYERS_TABLE_NAME, null, values3);
 
-        ContentValues values4 = new ContentValues();
-        values4.put(PLAYERS_NAME_COL, "Julia");
-        values4.put(SCORES_SCORE_COL, 800);
-        values4.put(SCORES_GAME_COL, "2048");
-        db.insert(SCORES_TABLE_NAME, null, values4);
-
-        ContentValues values5 = new ContentValues();
-        values5.put(PLAYERS_NAME_COL, "Julia");
-        values5.put(SCORES_SCORE_COL, 80);
-        values5.put(SCORES_GAME_COL, "peg");
-        db.insert(SCORES_TABLE_NAME, null, values5);
-
-        ContentValues values6 = new ContentValues();
-        values6.put(PLAYERS_NAME_COL, "Admin");
-        values6.put(SCORES_SCORE_COL, 40);
-        values6.put(SCORES_GAME_COL, "peg");
-        db.insert(SCORES_TABLE_NAME, null, values6);
+        ContentValues values2 = new ContentValues();
+        values2.put(PLAYERS_NAME_COL, "Admin");
+        values2.put(SCORES_SCORE_COL, 200);
+        values2.put(SCORES_TIME_COL, "00:35");
+        values2.put(SCORES_LEVEL_COL, "Medium");
+        values2.put(SCORES_GAME_COL, "2048");
+        db.insert(SCORES_TABLE_NAME, null, values2);
 
         ContentValues values7 = new ContentValues();
         values7.put(PLAYERS_NAME_COL, "Sofi");
         values7.put(PLAYERS_PASS_COL, "Sofi");
         db.insert(PLAYERS_TABLE_NAME, null, values7);
 
+        ContentValues values4 = new ContentValues();
+        values4.put(PLAYERS_NAME_COL, "Julia");
+        values4.put(SCORES_SCORE_COL, 504);
+        values4.put(SCORES_TIME_COL, "00:39");
+        values4.put(SCORES_LEVEL_COL, "Hard");
+        values4.put(SCORES_GAME_COL, "2048");
+        db.insert(SCORES_TABLE_NAME, null, values4);
+
+        ContentValues values5 = new ContentValues();
+        values5.put(PLAYERS_NAME_COL, "Julia");
+        values5.put(SCORES_SCORE_COL, 21);
+        values5.put(SCORES_TIME_COL, "03:52");
+        values5.put(SCORES_LEVEL_COL, "British");
+        values5.put(SCORES_GAME_COL, "peg");
+        db.insert(SCORES_TABLE_NAME, null, values5);
+
+        ContentValues values6 = new ContentValues();
+        values6.put(PLAYERS_NAME_COL, "Admin");
+        values6.put(SCORES_SCORE_COL, 40);
+        values6.put(SCORES_LEVEL_COL, "French");
+        values6.put(SCORES_TIME_COL, "05:01");
+        values6.put(SCORES_GAME_COL, "peg");
+        db.insert(SCORES_TABLE_NAME, null, values6);
+
         ContentValues values8 = new ContentValues();
         values8.put(PLAYERS_NAME_COL, "Sofi");
         values8.put(SCORES_SCORE_COL, 10);
+        values8.put(SCORES_LEVEL_COL, "General");
+        values8.put(SCORES_TIME_COL, "00:53");
         values8.put(SCORES_GAME_COL, "peg");
         db.insert(SCORES_TABLE_NAME, null, values8);
 
         ContentValues values9 = new ContentValues();
         values9.put(PLAYERS_NAME_COL, "Sofi");
         values9.put(SCORES_SCORE_COL, 1000);
+        values9.put(SCORES_LEVEL_COL, "Easy");
+        values9.put(SCORES_TIME_COL, "00:69");
         values9.put(SCORES_GAME_COL, "2048");
         db.insert(SCORES_TABLE_NAME, null, values9);
     }

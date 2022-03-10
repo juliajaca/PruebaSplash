@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 public class _Peg_Token extends FrameLayout {
 
     private _Peg_Logica logica;

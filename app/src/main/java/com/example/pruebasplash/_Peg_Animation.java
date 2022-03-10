@@ -22,16 +22,21 @@ import java.util.List;
 
 public class _Peg_Animation extends FrameLayout implements Serializable {
     private List<_Peg_Token> tokens = new ArrayList<_Peg_Token>();
+    private _Peg_Logica gameView;
+
     public _Peg_Animation(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
     }
 
     public _Peg_Animation(Context context, AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     public _Peg_Animation(Context context) {
         super(context);
+
     }
 
     public void createMoveAnim(final _Peg_Token from,final _Peg_Token to,int fromX,int toX,int fromY,int toY){
@@ -44,15 +49,6 @@ public class _Peg_Animation extends FrameLayout implements Serializable {
         lp.topMargin = fromY*Config.TOKEN_WIDTH;
         c.setLayoutParams(lp);
 
-        /*
-        AnimatorSet set = new AnimatorSet();
-        Animator animator1 = ObjectAnimator.ofFloat(c, "scaleX", 0F, 0.9F);
-        Animator animator2 = ObjectAnimator.ofFloat(c, "scaleY", 0f, 0.9f);
-        Animator animator3 = ObjectAnimator.ofFloat(c, "translationX", 0f, Config.TOKEN_WIDTH*(toX-fromX));
-        Animator animator4 = ObjectAnimator.ofFloat(c, "translationY", 0f, Config.TOKEN_WIDTH*(toY-fromY));
-        set.playTogether(animator1,animator2);
-        set.setDuration(1000).start();
-*/
         TranslateAnimation ta = new TranslateAnimation(0, Config.TOKEN_WIDTH*(toX-fromX), 0, Config.TOKEN_WIDTH*(toY-fromY));
         ta.setDuration(1000);
 
@@ -67,13 +63,14 @@ public class _Peg_Animation extends FrameLayout implements Serializable {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Log.d("CON", "entra");
-                //ScaleAnimation sa = new ScaleAnimation(0.9f, 1f, 0.9f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-               // sa.setDuration(1000);
-                //c.startAnimation(sa);
                 to.setEstadoFicha(_Peg_Token.TiposEstados.FICHA);
                 to.getLabel().setVisibility(View.VISIBLE);
                 recycleCard(c);
+                gameView = _Peg_Pantalla.getMainActivity().getGameView();
+                if(gameView.juegoTerminado()){
+                    gameView.setEstadoJuego(_Peg_Logica.Estado.JUEGO_TERMINADO);
+                    gameView.notificarFinal();
+                }
 
             }
         });

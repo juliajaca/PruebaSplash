@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Spaslh"
-    android:background="@color/baby_pink">
+    android:background="@color/baby_pink"
+    tools:context=".Spaslh">
 
     <ImageView
+        android:id="@+id/iv_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id ="@+id/iv_top"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_top_vector"/>
+        android:src="@drawable/ic_top_vector" />
 
     <LinearLayout
         android:id="@+id/LayoutLogin"
@@ -27,12 +26,6 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
-
-        <TextView
-            android:id="@+id/loginIncorrecto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/rojo_corazon_oscuro"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,15 +42,14 @@
                 app:tint="@color/rojo_corazon" />
 
             <EditText
-                android:layout_marginLeft="5dp"
                 android:id="@+id/nombreCaja"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/fondo_login"
                 android:hint="Usuario"
                 android:maxLength="20"
                 android:paddingLeft="5dp" />
-
 
 
         </LinearLayout>
@@ -65,8 +57,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="5dp"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/fondo_login"
             android:orientation="horizontal">
 
@@ -78,13 +70,13 @@
 
             <EditText
                 android:id="@+id/passCaja"
-                android:layout_marginLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/fondo_login"
                 android:hint="Contraseña"
-                android:maxLength="20"
                 android:inputType="textPassword"
+                android:maxLength="20"
                 android:paddingLeft="5dp" />
         </LinearLayout>
 
@@ -108,7 +100,7 @@
             android:drawableBottom="@null"
             android:shadowRadius="@null"
             android:text="¿Necesitas una cuenta?"
-            android:textColor="@color/rojo_corazon"/>
+            android:textColor="@color/rojo_corazon" />
     </LinearLayout>
 
 

@@ -1,10 +1,32 @@
 package com.example.pruebasplash;
 
 public class JugadorModel {
-    private String id;
+
     private String nombre;
     private String contraseña;
 
-
     public JugadorModel(){};
+
+    public JugadorModel(String nombre, String contraseña) {
+        this.nombre = nombre;
+        this.contraseña = contraseña;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+
 }

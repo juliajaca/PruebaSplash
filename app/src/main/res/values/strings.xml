@@ -1,15 +1,18 @@
 <resources>
-    <string name="app_name">PruebaSplash</string>
+    <string name="app_name">JuliGames Center</string>
     <string name="app_info">JuliGames 2022</string>
+    <string name="select_a_difficulty_level">Select a difficulty level</string>
 
     <string-array name="campos_tabla_puntuacion">
-        <item>nombre</item>
         <item>puntuacion</item>
+        <item>nombre</item>
+        <item>tiempo</item>
+        <item>nivel</item>
     </string-array>
 
     <string-array name="ordenacion_tabla_puntuacion">
-        <item>asc</item>
         <item>desc</item>
+        <item>asc</item>
     </string-array>
 
 </resources>

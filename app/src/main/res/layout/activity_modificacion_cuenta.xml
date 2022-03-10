@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Spaslh"
-    android:background="@color/baby_pink">
+    android:background="@color/baby_pink"
+    tools:context=".Spaslh">
 
     <ImageView
+        android:id="@+id/iv_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id ="@+id/iv_top"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_top_vector"/>
+        android:src="@drawable/ic_top_vector" />
 
     <LinearLayout
         android:id="@+id/LayoutNombre"
@@ -31,20 +30,20 @@
 
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:padding="10dp"
             android:background="@drawable/fondo_login"
-            android:text="NOMBRE DE USUARIO"
             android:gravity="center"
+            android:padding="10dp"
+            android:text="USER NAME"
             android:textStyle="bold"></TextView>
 
         <TextView
             android:id="@+id/CajaUsuario"
             android:layout_width="match_parent"
-            android:padding="10dp"
             android:layout_height="wrap_content"
-            android:text="No hay nombre todavia"
-            android:gravity="center"></TextView>
-        </LinearLayout>
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="No hay nombre todavia"></TextView>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -62,31 +61,31 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:padding="10dp"
             android:background="@drawable/fondo_login"
-            android:text="CONTRASEÑA"
             android:gravity="center"
+            android:padding="10dp"
+            android:text="PASSWORD"
             android:textStyle="bold"></TextView>
 
         <TextView
             android:layout_width="match_parent"
-            android:padding="10dp"
             android:layout_height="wrap_content"
-            android:text="contraseña"
+            android:gravity="center"
             android:inputType="textPassword"
-            android:gravity="center"></TextView>
+            android:padding="10dp"
+            android:text="contraseña"></TextView>
 
         <Button
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cambiar contraseña"
-            android:onClick="verDialogo"
-            android:gravity="center"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_marginTop="5dp"
             android:background="@null"
             android:drawableBottom="@null"
+            android:gravity="center"
+            android:onClick="verDialogo"
             android:shadowRadius="@null"
+            android:text="Update password"
             android:textColor="@color/rojo_corazon"></Button>
     </LinearLayout>
 
@@ -103,8 +102,8 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -113,7 +112,7 @@
                 android:background="@drawable/fondo_login"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="NIVEL 2048"
+                android:text="2048 LEVEL"
                 android:textStyle="bold"></TextView>
 
             <TextView
@@ -128,8 +127,8 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -139,7 +138,7 @@
                 android:background="@drawable/fondo_login"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="NIVEL PEG"
+                android:text="PEG LEVEL"
                 android:textStyle="bold"></TextView>
 
             <TextView

@@ -8,11 +8,11 @@
     tools:context=".Spaslh">
 
     <ImageView
+        android:id="@+id/iv_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id ="@+id/iv_top"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_top_vector"/>
+        android:src="@drawable/ic_top_vector" />
 
     <LinearLayout
         android:id="@+id/Layout"
@@ -36,69 +36,72 @@
                 android:id="@+id/label4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver por:" />
+                android:text="Field:" />
+
             <Spinner
                 android:id="@+id/spinnerCampo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/label5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="orden:" />
+                android:text="in:" />
+
             <Spinner
                 android:id="@+id/spinnerOrden"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-    <TabHost
-        android:id="@+id/TabHost1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <TabHost
+            android:id="@+id/TabHost1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TabWidget
-                android:id="@android:id/tabs"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
+                <TabWidget
+                    android:id="@android:id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/ScrollView2048"
-                    android:scrollbars="vertical">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="wrap_content" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/ScrollViewPeg"
-                    android:scrollbars="vertical">
+                    android:layout_height="match_parent">
 
-                </androidx.recyclerview.widget.RecyclerView>
-            </FrameLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/ScrollView2048"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/ScrollViewPeg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="vertical">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </FrameLayout>
 
 
-        </LinearLayout>
-    </TabHost>
+            </LinearLayout>
+        </TabHost>
 
     </LinearLayout>
+
     <ImageView
+        android:id="@+id/iv_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id ="@+id/iv_bottom"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_bottom_vector"
-        android:baselineAlignBottom="true"/>
+        android:baselineAlignBottom="true"
+        android:src="@drawable/ic_bottom_vector" />
 </RelativeLayout>

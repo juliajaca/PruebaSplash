@@ -10,12 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
+
 public class Login extends AppCompatActivity {
     private DBHandler dbHandler;
     private String nombre, contraseña;
     private EditText cajaNombre, cajaContraseña;
     private Button botonEnviarDatos, botonCrearCuenta;
-    private TextView textoLoginIncorrecto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,6 @@ public class Login extends AppCompatActivity {
         cajaContraseña = findViewById(R.id.passCaja);
         cajaNombre = findViewById(R.id.nombreCaja);
         botonEnviarDatos = findViewById(R.id.botonIniciarSesion);
-        textoLoginIncorrecto = findViewById(R.id.loginIncorrecto);
         botonCrearCuenta = findViewById(R.id.buttonCrearcuenta);
 
         // creating a new dbhandler class and passing our context to it.
@@ -41,12 +41,13 @@ public class Login extends AppCompatActivity {
                 // validating if the text fields are empty or not.
                 if ((nombre.isEmpty()|| nombre.length() == 0 || nombre.equals("") || nombre == null ) ||
                         (  contraseña.isEmpty() || contraseña.length() == 0 || contraseña.equals("") || contraseña == null)) {
-                    Toast.makeText(Login.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Login.this, "Please enter alll the data...", Toasty.LENGTH_SHORT, true).show();
+
                     return;
                 }
                 // on below line we are calling a method to add new course to sqlite data and pass all our values to it.
-
-                String user = dbHandler.buscarJugador(nombre, contraseña);
+                JugadorModel jugadormodel = new JugadorModel(nombre, contraseña);
+                String user = dbHandler.buscarJugador(jugadormodel);
 
                 if (user != null){
                     Intent i = new Intent(Login.this, Menu.class);
@@ -54,10 +55,9 @@ public class Login extends AppCompatActivity {
                     startActivity(i);
                     Config.LOGGED_USER = user;
                 }else{
-                    textoLoginIncorrecto.setText("Usuario o contraseña incorrectos.");
+                    Toasty.error(Login.this, "Username or password incorrect", Toasty.LENGTH_SHORT, true).show();
                 }
 
-               Toast.makeText(Login.this, "Hay" +user, Toast.LENGTH_SHORT).show();
             }
         });
 

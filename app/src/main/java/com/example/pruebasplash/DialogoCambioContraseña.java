@@ -18,7 +18,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class DialogoCambioContraseña extends DialogFragment {
 
-    public static String TAG = "Multichoice";
+    public static String TAG = "Dialog";
 
     public interface OnInputListener {
         void sendInput(String input, String input2);
@@ -44,7 +44,6 @@ public class DialogoCambioContraseña extends DialogFragment {
                 new View.OnClickListener() {
                     @Override public void onClick(View v)
                     {
-                        Log.d(TAG, "onClick: closing dialog");
                         getDialog().dismiss();
                     }
                 });
@@ -53,7 +52,6 @@ public class DialogoCambioContraseña extends DialogFragment {
                 new View.OnClickListener() {
                     @Override public void onClick(View v)
                     {
-                        Log.d(TAG, "onClick: capturing input");
                         String pass1 = caja1.getText().toString();
                         String pass2 = caja2.getText().toString();
                         mOnInputListener.sendInput(pass1, pass2);

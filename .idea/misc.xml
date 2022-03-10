@@ -21,25 +21,35 @@
         <entry key="..\:/Users/alumnat.INFORMAT/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/layout_dialogo.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/alumnat.INFORMAT/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/list_item.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/alumnat.INFORMAT/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/prueba_dialogo.xml" value="0.1" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/con_ficha.xml" value="0.1" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/ic_baseline_lens_24.xml" value="0.1" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/ic_heart.xml" value="0.3235897435897436" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/ic_launcher_background.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/pulsada.xml" value="0.1" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/drawable/sin_ficha.xml" value="0.1" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout-land/activity_2048_pantalla.xml" value="0.22" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout-land/activity_peg_pantalla.xml" value="0.1437389770723104" />
-        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_2048_pantalla.xml" value="0.1" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_2048_pantalla.xml" value="0.25" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_2048_seleccion_nivel.xml" value="0.1" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_creacion_cuenta.xml" value="0.1" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_login.xml" value="0.15520833333333334" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_main.xml" value="0.25905797101449274" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_menu.xml" value="0.25" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_modificacion_cuenta.xml" value="0.16979166666666667" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_peg_pantalla.xml" value="0.26721014492753625" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_peg_seleccion_nivel.xml" value="0.18072916666666666" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_scores.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/activity_spaslh.xml" value="0.1519756838905775" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/layout_dialogo.xml" value="0.15520833333333334" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/list_header.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/list_item.xml" value="0.26666666666666666" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/layout/menu_item.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/jjaca/AndroidStudioProjects/PruebaSplash/app/src/main/res/menu/main.xml" value="0.3375" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
